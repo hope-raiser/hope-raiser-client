@@ -52,6 +52,5 @@ export{
     getAllCampaign,
     getCampaignDetail,
     deleteCampaignById,
-    editCampaign,
-    deleteCampaignById
+    editCampaign
 }
