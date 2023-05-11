@@ -1,8 +1,12 @@
 import { instance } from "../axios/index.js";
 
-async function getAllCampaign() {
+async function getAllCampaign(category_id) {
     try {
-        const response = await instance.get("/campaigns");
+        let path = "/campaigns"
+        if(category_id) {
+            path = `campaigns?category_id=${category_id}`
+        }
+        const response = await instance.get(path);
         return response.data;
     } catch (error) {
         throw new Error(error.response.data.message || "Something went wrong");
@@ -51,6 +55,7 @@ async function deleteCampaignById(id) {
 export{
     getAllCampaign,
     getCampaignDetail,
-    deleteCampaignById,
-    editCampaign
+    createNewCampaign,
+    editCampaign,
+    deleteCampaignById
 }
