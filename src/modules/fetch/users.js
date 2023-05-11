@@ -12,6 +12,7 @@ async function registerUser(data) {
 async function loginUser(data) {
   try {
     const response = await instance.post("/users/login", data);
+    localStorage.setItem('token', response.data.token);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || "Something went wrong");
