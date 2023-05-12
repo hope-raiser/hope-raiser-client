@@ -24,7 +24,6 @@ const [showAlert, setShowAlert] = useState(false); // Define the showAlert state
     const handleSubmit = async () => {
         try{
         const response = await loginUser({email, password})
-        console.log(response)
 
         router.push('/');
         } catch (error) {
