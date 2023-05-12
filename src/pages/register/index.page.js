@@ -22,7 +22,6 @@ function Register() {
     const handleSubmit = async () => {
         
         const response = await registerUser({name, email, password})
-        console.log(response)
         router.push('/login');
     }
 
