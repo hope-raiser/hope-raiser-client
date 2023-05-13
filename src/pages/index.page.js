@@ -1,12 +1,8 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter, League_Gothic } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
 import Layout from '@/components/Layout'
 import CampaignCard from '@/components/CampaignCard'
 import { useEffect, useState } from 'react'
 import { getAllCampaign } from '@/modules/fetch/campaigns'
-import { SimpleGrid } from '@chakra-ui/react'
+import { CircularProgress, SimpleGrid } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 const Home = ({query}) => {
@@ -27,7 +23,7 @@ const Home = ({query}) => {
   if (isLoading) {
     return (
       <>
-        <h1>IS LOADINGGGGG........</h1>
+        <CircularProgress isIndeterminate color='green.300' />
       </>
     )
   }

@@ -26,7 +26,7 @@ function Category() {
   if (isLoading) {
     return (
       <>
-        <h1>IS LOADINGGGGG........</h1>
+        <CircularProgress isIndeterminate color='green.300' />
       </>
     )
   }
