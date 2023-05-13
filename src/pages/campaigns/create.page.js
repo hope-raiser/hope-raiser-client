@@ -6,15 +6,18 @@ import {
     Button,
     VStack,
     useToast,
+    Select
  } from "@chakra-ui/react";
  import Layout from "@/components/Layout";
  import { createNewCampaign } from "@/modules/fetch/campaigns";
  import { SingleDatepicker } from "chakra-dayzed-datepicker";
  import React, { useState } from "react";
+import { useRouter } from "next/router";
 
  function NewCampaign(){
     // using toast from chakra
     const toast = useToast();
+    const router = useRouter();
     const [date, setDate] = useState(new Date());
     // submit function when user click the button
     async function handleSubmit(event){
@@ -28,7 +31,8 @@ import {
             status: "success",
             duration: 3000,
             isClosable: true,
-        })
+        });
+        router.push("/")
     }
     return(
         <Layout>
@@ -61,9 +65,13 @@ import {
                             onDateChange={setDate}/>
                     </FormControl>
                     <FormControl>
+                        <FormLabel>Campaign Category</FormLabel>
+                        <Input name="category_ids" required/>
+                    </FormControl>
+                    <FormControl>
                         <FormLabel>Image</FormLabel>
                         <Input 
-                            name="banner" 
+                            name="image" 
                             type="file"
                             accept="/image/*" required/>
                     </FormControl>
