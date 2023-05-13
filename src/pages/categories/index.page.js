@@ -22,6 +22,7 @@ function Category() {
       setLoading(false)
     })
   }, []);
+  console.log(categories)
 
   if (isLoading) {
     return (
