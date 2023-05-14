@@ -1,14 +1,4 @@
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Input,
-  Button,
-  VStack,
-  useToast,
-  Stack,
-  Radio
-} from "@chakra-ui/react";
+import { FormControl, FormLabel, FormErrorMessage, Input, Button, VStack, useToast, Stack, Radio } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
 import { createNewCampaign } from "@/modules/fetch/campaigns";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
@@ -21,14 +11,14 @@ function NewCampaign() {
   const toast = useToast();
   const router = useRouter();
   const [date, setDate] = useState(new Date());
-  const [categories, setCategories] = useState('');
+  const [categories, setCategories] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [categoryIds, setCategoryIds] = useState([]);
 
   useEffect(() => {
     Promise.all([getAllCategory()]).then((values) => {
       setCategories(...values);
-      setLoading(false)
+      setLoading(false);
     });
   }, []);
   console.log(categories);
@@ -38,36 +28,36 @@ function NewCampaign() {
       <>
         <h1>IS LOADINGGGGG........</h1>
       </>
-    )
+    );
   }
   // submit function when user click the button
   async function handleSubmit(event) {
     event.preventDefault();
     // get new form data
     let formData = new FormData(event.target);
-    formData.append("category_ids", categoryIds)
-    await createNewCampaign(formData);
+    formData.append("category_ids", categoryIds);
+    const res = await createNewCampaign(formData);
+
     toast({
       title: "Campaign created",
       description: "Campaign Successfull created",
       status: "success",
       duration: 3000,
-      isClosable: true,
+      isClosable: true
     });
     router.push("/");
   }
   const handleCategoryChange = (event) => {
-    if(event.target.checked == true){
-        setCategoryIds([...categoryIds, +(event.target.value)])
-    } 
-    else {
-        const selectIds = categoryIds.filter( a => {
-            if(a === +event.target.value) return false
-            return true;
-        })
-        setCategoryIds([...selectIds])
+    if (event.target.checked == true) {
+      setCategoryIds([...categoryIds, +event.target.value]);
+    } else {
+      const selectIds = categoryIds.filter((a) => {
+        if (a === +event.target.value) return false;
+        return true;
+      });
+      setCategoryIds([...selectIds]);
     }
-  }
+  };
   return (
     <Layout>
       <form onSubmit={handleSubmit}>
@@ -85,38 +75,27 @@ function NewCampaign() {
             <Input name="goal" required />
           </FormControl>
           <FormControl>
-            <Input
-              type="hidden"
-              name="currentDonation"
-              defaultValue={0}
-              required
-            />
+            <Input type="hidden" name="currentDonation" defaultValue={0} required />
           </FormControl>
           <FormControl>
             <FormLabel>Campaign End Date</FormLabel>
-            <SingleDatepicker
-              name="endDate"
-              date={date}
-              onDateChange={setDate}
-            />
+            <SingleDatepicker name="endDate" date={date} onDateChange={setDate} />
           </FormControl>
           <FormControl>
             <FormLabel>Campaign Category</FormLabel>
-            <Stack spacing={[1,5]} direction={['column', 'row']}>
-                {
-                    categories.map((category, idx) => {
-                        return (
-                            <div key={idx}>
-                                <Radio
-                                    onChange={handleCategoryChange}
-                                    value={category.id}
-                                    isChecked={categoryIds.lastIndexOf(category.id) >= 0 ? true : false}
-                                />
-                                <FormLabel>{category.name}</FormLabel>
-                            </div>
-                        )
-                    })
-                }
+            <Stack spacing={[1, 5]} direction={["column", "row"]}>
+              {categories.map((category, idx) => {
+                return (
+                  <div key={idx}>
+                    <Radio
+                      onChange={handleCategoryChange}
+                      value={category.id}
+                      isChecked={categoryIds.lastIndexOf(category.id) >= 0 ? true : false}
+                    />
+                    <FormLabel>{category.name}</FormLabel>
+                  </div>
+                );
+              })}
             </Stack>
           </FormControl>
           <FormControl>

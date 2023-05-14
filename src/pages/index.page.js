@@ -1,26 +1,24 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import Layout from '@/components/Layout'
-import CampaignCard from '../components/CampaignCard.jsx'
-import { useEffect, useState } from 'react'
-import { getAllCampaign } from '@/modules/fetch/campaigns'
-import { SimpleGrid } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
+import Head from "next/head";
+import Image from "next/image";
+import styles from "@/styles/Home.module.css";
+import Layout from "@/components/Layout";
+import CampaignCard from "../components/CampaignCard.jsx";
+import { useEffect, useState } from "react";
+import { getAllCampaign } from "@/modules/fetch/campaigns";
+import { SimpleGrid } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
-const Home = ({query}) => {
+const Home = ({ query }) => {
   const [campaigns, setCampaign] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
-  const {category_id} = router.query
-
+  const { category_id } = router.query;
 
   useEffect(() => {
     Promise.all([getAllCampaign(category_id)]).then((values) => {
-      setCampaign(...values)
-      setLoading(false)
-    })
-
+      setCampaign(...values);
+      setLoading(false);
+    });
   }, []);
 
   if (isLoading) {
@@ -28,7 +26,7 @@ const Home = ({query}) => {
       <>
         <h1>IS LOADINGGGGG........</h1>
       </>
-    )
+    );
   }
 
   return (
@@ -39,12 +37,11 @@ const Home = ({query}) => {
         ))}
       </SimpleGrid>
     </Layout>
+  );
+};
 
-  )
-}
-
-Home.getInitialProps = ({query}) => {
-  return query
-}
+Home.getInitialProps = ({ query }) => {
+  return query;
+};
 
 export default Home;
