@@ -16,7 +16,7 @@ async function getAllCampaign(category_id) {
 async function getCampaignDetail(id) {
     try {
         const response = await instance.get(`/campaigns/${id}`);
-        return response;
+        return response.data;
     } catch (error) {
         throw new Error(error.response.data.message || "Something went wrong");
     }

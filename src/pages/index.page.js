@@ -5,7 +5,7 @@ import Layout from '@/components/Layout'
 import CampaignCard from '../components/CampaignCard.jsx'
 import { useEffect, useState } from 'react'
 import { getAllCampaign } from '@/modules/fetch/campaigns'
-import { SimpleGrid } from '@chakra-ui/react'
+import { CircularProgress, SimpleGrid } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 const Home = ({query}) => {
@@ -26,7 +26,7 @@ const Home = ({query}) => {
   if (isLoading) {
     return (
       <>
-        <h1>IS LOADINGGGGG........</h1>
+        <CircularProgress isIndeterminate color='green.300' />
       </>
     )
   }
@@ -35,7 +35,7 @@ const Home = ({query}) => {
     <Layout>
       <SimpleGrid columns={3} spacing={6} justifyContent="center">
         {campaigns.data.map((campaign, idx) => (
-          <CampaignCard key={idx} {...campaign} />
+          <CampaignCard campaign={campaign} />
         ))}
       </SimpleGrid>
     </Layout>
