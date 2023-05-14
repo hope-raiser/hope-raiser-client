@@ -7,7 +7,7 @@ import {
   VStack,
   useToast,
   Stack,
-  Radio
+  Checkbox
 } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
 import { createNewCampaign } from "@/modules/fetch/campaigns";
@@ -107,7 +107,7 @@ function NewCampaign() {
                     categories.map((category, idx) => {
                         return (
                             <div key={idx}>
-                                <Radio
+                                <Checkbox
                                     onChange={handleCategoryChange}
                                     value={category.id}
                                     isChecked={categoryIds.lastIndexOf(category.id) >= 0 ? true : false}
