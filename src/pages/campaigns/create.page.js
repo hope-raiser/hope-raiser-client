@@ -1,4 +1,15 @@
-import { FormControl, FormLabel, FormErrorMessage, Input, Button, VStack, useToast, Stack, Radio } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Input,
+  Button,
+  VStack,
+  useToast,
+  Stack,
+  Checkbox,
+  CircularProgress
+} from "@chakra-ui/react";
 import Layout from "@/components/Layout";
 import { createNewCampaign } from "@/modules/fetch/campaigns";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
@@ -26,7 +37,7 @@ function NewCampaign() {
   if (isLoading) {
     return (
       <>
-        <h1>IS LOADINGGGGG........</h1>
+        <CircularProgress isIndeterminate color="green.300" />
       </>
     );
   }
@@ -87,7 +98,7 @@ function NewCampaign() {
               {categories.map((category, idx) => {
                 return (
                   <div key={idx}>
-                    <Radio
+                    <Checkbox
                       onChange={handleCategoryChange}
                       value={category.id}
                       isChecked={categoryIds.lastIndexOf(category.id) >= 0 ? true : false}

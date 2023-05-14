@@ -1,8 +1,12 @@
 import { instance } from "../axios/index.js";
 
-async function getAllComment() {
+async function getAllComment(id) {
     try {
-        const response = await instance.get("/comments");
+        let path = "/comments"
+        if(id) {
+            path += `?campaign_id=${id}`
+        }
+        const response = await instance.get(path);
         return response.data;
     } catch (error) {
         throw new Error(error.response.data.message || "Something went wrong");

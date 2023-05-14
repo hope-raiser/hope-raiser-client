@@ -6,7 +6,7 @@ import Layout from '@/components/Layout'
 import CampaignCard from '@/components/CampaignCard'
 import { useEffect, useState } from 'react'
 import { getAllCampaign } from '@/modules/fetch/campaigns'
-import { Button, SimpleGrid, VStack } from '@chakra-ui/react'
+import { Button, CircularProgress, SimpleGrid, VStack } from '@chakra-ui/react'
 import { getAllCategory } from '@/modules/fetch/categories'
 import { useRouter } from 'next/router'
 
@@ -27,7 +27,7 @@ function Category() {
   if (isLoading) {
     return (
       <>
-        <h1>IS LOADINGGGGG........</h1>
+        <CircularProgress isIndeterminate color='green.300' />
       </>
     )
   }
