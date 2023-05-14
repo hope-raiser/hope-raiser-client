@@ -6,7 +6,8 @@ import {
   Button,
   VStack,
   useToast,
-  Select,
+  Stack,
+  Radio
 } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
 import { createNewCampaign } from "@/modules/fetch/campaigns";
@@ -22,6 +23,7 @@ function NewCampaign() {
   const [date, setDate] = useState(new Date());
   const [categories, setCategories] = useState('');
   const [isLoading, setLoading] = useState(true);
+  const [categoryIds, setCategoryIds] = useState([]);
 
   useEffect(() => {
     Promise.all([getAllCategory()]).then((values) => {
@@ -30,6 +32,7 @@ function NewCampaign() {
     });
   }, []);
   console.log(categories);
+  // loading page
   if (isLoading) {
     return (
       <>
@@ -41,7 +44,8 @@ function NewCampaign() {
   async function handleSubmit(event) {
     event.preventDefault();
     // get new form data
-    const formData = new FormData(event.target);
+    let formData = new FormData(event.target);
+    formData.append("category_ids", categoryIds)
     await createNewCampaign(formData);
     toast({
       title: "Campaign created",
@@ -51,6 +55,18 @@ function NewCampaign() {
       isClosable: true,
     });
     router.push("/");
+  }
+  const handleCategoryChange = (event) => {
+    if(event.target.checked == true){
+        setCategoryIds([...categoryIds, +(event.target.value)])
+    } 
+    else {
+        const selectIds = categoryIds.filter( a => {
+            if(a === +event.target.value) return false
+            return true;
+        })
+        setCategoryIds([...selectIds])
+    }
   }
   return (
     <Layout>
@@ -86,13 +102,22 @@ function NewCampaign() {
           </FormControl>
           <FormControl>
             <FormLabel>Campaign Category</FormLabel>
-            {/* {categories.map((category, idx) => {
-              return (
-                // <Select placeholder="Select Campaign Category">
-                //   <option name="category_ids" key={idx} value={category.id}>{category.name}</option>
-                // </Select>
-              )
-            })} */}
+            <Stack spacing={[1,5]} direction={['column', 'row']}>
+                {
+                    categories.map((category, idx) => {
+                        return (
+                            <div key={idx}>
+                                <Radio
+                                    onChange={handleCategoryChange}
+                                    value={category.id}
+                                    isChecked={categoryIds.lastIndexOf(category.id) >= 0 ? true : false}
+                                />
+                                <FormLabel>{category.name}</FormLabel>
+                            </div>
+                        )
+                    })
+                }
+            </Stack>
           </FormControl>
           <FormControl>
             <FormLabel>Image</FormLabel>
