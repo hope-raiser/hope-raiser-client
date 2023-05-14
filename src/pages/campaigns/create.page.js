@@ -7,7 +7,8 @@ import {
   VStack,
   useToast,
   Stack,
-  Checkbox
+  Checkbox,
+  CircularProgress
 } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
 import { createNewCampaign } from "@/modules/fetch/campaigns";
@@ -36,7 +37,7 @@ function NewCampaign() {
   if (isLoading) {
     return (
       <>
-        <h1>IS LOADINGGGGG........</h1>
+        <CircularProgress isIndeterminate color='green.300' />
       </>
     )
   }
