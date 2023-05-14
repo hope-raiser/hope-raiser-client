@@ -3,20 +3,27 @@ import { useEffect, useState } from 'react'
 import { Box, Button, CircularProgress, Divider, Heading, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react'
 import { getAllCategory } from '@/modules/fetch/categories'
 import { useRouter } from 'next/router'
-import { getAllComment } from '@/modules/fetch/comments'
+import { deleteCommentById, getAllComment } from '@/modules/fetch/comments'
 
-function Comment() {
+function Comment({ id }) {
     const [comments, setComments] = useState("");
     const [isLoading, setLoading] = useState(true);
     const router = useRouter();
 
 
     useEffect(() => {
-        Promise.all([getAllComment()]).then((values) => {
-            setComments(...values)
-            setLoading(false)
-        })
+        const fetchComments = async () => {
+            const data = await getAllComment(id);
+            setComments(data);
+            setLoading(false);
+        }
+        fetchComments();
     }, []);
+
+    const handleDeleteComments = async () => {
+        await deleteCommentById(id);
+        router.push("/");
+    }
 
     if (isLoading) {
         return (
@@ -36,7 +43,10 @@ function Comment() {
                             return (
                                 <Stack direction='row' h='100px' p={4}>
                                     <Divider orientation='vertical' />
-                                    <Text fontSize='md'>{comment.user.name}<br></br>{comment.createdAt}<br></br>{comment.content}</Text>
+                                    <Text fontSize='md' key={idx}>{comment.content}</Text>
+                                    <Button onClick={handleDeleteComments} colorScheme="red">
+                                        Delete
+                                    </Button>
                                 </Stack>
                             )
                         })}
@@ -45,6 +55,15 @@ function Comment() {
             </Layout>
         </>
     )
+}
+
+export async function getServerSideProps(ctx) {
+    const { id } = ctx.query;
+    return {
+        props: {
+            id,
+        },
+    };
 }
 
 export default Comment;

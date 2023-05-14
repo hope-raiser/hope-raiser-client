@@ -1,8 +1,12 @@
 import { instance } from "../axios/index.js";
 
-async function getAllDonation() {
+async function getAllDonation(id) {
     try {
-        const response = await instance.get("/donations");
+        let path = "/donations"
+        if(id) {
+            path += `?campaign_id=${id}`
+        }
+        const response = await instance.get(path);
         return response.data;
     } catch (error) {
         throw new Error(error.response.data.message || "Something went wrong");

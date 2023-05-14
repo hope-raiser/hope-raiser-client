@@ -14,19 +14,24 @@ import {
 import Link from "next/link";
 
 function CampaignCard(props) {
-  const { id, title, description, goal, currentDonation, endDate, banner } =
-    props;
+  const { campaign } = props;
 
   return (
-    <Link href={`/campaigns/${id}`}>
+    <Link href={`/campaigns/${campaign.id}`}>
       <Card maxW="sm">
         <CardBody>
-          <Image src={banner.length == 0 ? "[]" : banner[0].image} />
+          {
+            campaign.banner.map((bann, index) => {
+              return (
+                <Image key={index} src={bann.image} />
+              )
+            })
+          }
           <Stack mt="6" spacing="3">
-            <Heading size="md">{title}</Heading>
-            <Text>{description}</Text>
+            <Heading size="md">{campaign.title}</Heading>
+            <Text>{campaign.description}</Text>
             <Text color="blue.600" fontSize="md">
-              Current Donation {currentDonation}
+              Current Donation {campaign.currentDonation}
             </Text>
           </Stack>
         </CardBody>

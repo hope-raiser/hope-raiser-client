@@ -1,22 +1,21 @@
 import Layout from '@/components/Layout'
 import { useEffect, useState } from 'react'
 import { Box, Button, CircularProgress, Divider, Heading, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react'
-import { getAllCategory } from '@/modules/fetch/categories'
 import { useRouter } from 'next/router'
-import { getAllComment } from '@/modules/fetch/comments'
 import { getAllDonation } from '@/modules/fetch/donations'
 
-function Donation() {
+function Donation({ id }) {
     const [donations, setDonations] = useState("");
     const [isLoading, setLoading] = useState(true);
-    const router = useRouter();
 
 
     useEffect(() => {
-        Promise.all([getAllDonation()]).then((values) => {
-            setDonations(...values)
-            setLoading(false)
-        })
+        const fetchDonations = async () => {
+            const data = await getAllDonation(id);
+            setDonations(data);
+            setLoading(false);
+        }
+        fetchDonations();
     }, []);
 
     if (isLoading) {
@@ -37,7 +36,7 @@ function Donation() {
                             return (
                                 <Stack direction='row' h='100px' p={4}>
                                     <Divider orientation='vertical' />
-                                    <Text fontSize='md'>{donation.user.name}<br></br>{donation.createdAt}<br></br>{donation.amount}</Text>
+                                    <Text fontSize='md' key={idx}>{donation.amount}</Text>
                                 </Stack>
                             )
                         })}
@@ -46,6 +45,15 @@ function Donation() {
             </Layout>
         </>
     )
+}
+
+export async function getServerSideProps(ctx) {
+    const { id } = ctx.query;
+    return {
+        props: {
+            id,
+        },
+    };
 }
 
 export default Donation;
