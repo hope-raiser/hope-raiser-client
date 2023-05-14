@@ -33,7 +33,7 @@ const Home = ({ query }) => {
     <Layout>
       <SimpleGrid columns={3} spacing={6} justifyContent="center">
         {campaigns.data.map((campaign, idx) => (
-          <CampaignCard campaign={campaign} />
+          <CampaignCard campaign={campaign} key={idx} />
         ))}
       </SimpleGrid>
     </Layout>

@@ -79,19 +79,17 @@ function Comment({ id }) {
             Comments
             {comments.map((comment, idx) => {
               return (
-                <>
-                  <Stack direction="row" h="100px" p={4}>
-                    <Divider orientation="vertical" />
-                    <Text fontSize="md" key={idx}>
-                      {comment.user.name}
-                      <br></br>
-                      {comment.content}
-                    </Text>
-                    <Button onClick={() => handleDeleteComments(comment.id)} colorScheme="red">
-                      Delete
-                    </Button>
-                  </Stack>
-                </>
+                <Stack direction="row" h="100px" p={4} key={idx}>
+                  <Divider orientation="vertical" />
+                  <Text fontSize="md" key={idx}>
+                    {comment.user.name}
+                    <br></br>
+                    {comment.content}
+                  </Text>
+                  <Button onClick={() => handleDeleteComments(comment.id)} colorScheme="red">
+                    Delete
+                  </Button>
+                </Stack>
               );
             })}
           </Heading>
