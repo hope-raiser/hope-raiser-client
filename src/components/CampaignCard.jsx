@@ -1,21 +1,10 @@
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardFooter,
-  Divider,
-  Heading,
-  Image,
-  Stack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, ButtonGroup, Card, CardBody, CardFooter, Divider, Heading, Image, Stack, Text, VStack } from "@chakra-ui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 function CampaignCard(props) {
-  const { id, title, description, goal, currentDonation, endDate, banner } =
-    props;
+  const { id, title, description, goal, currentDonation, endDate, banner } = props;
+  const router = useRouter();
 
   return (
     <Card maxW="sm">
@@ -37,6 +26,9 @@ function CampaignCard(props) {
           </Button>
           <Button variant="ghost" colorScheme="blue">
             Add to cart
+          </Button>
+          <Button variant="solid" colorScheme="orange" onClick={() => router.push(`campaigns/${id}/edit`)}>
+            Update
           </Button>
         </ButtonGroup>
       </CardFooter>
