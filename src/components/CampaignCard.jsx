@@ -7,19 +7,21 @@ function CampaignCard(props) {
   const router = useRouter();
 
   return (
-    <Link href={`/campaigns/${campaign.id}`}>
+    <>
       <Card maxW="sm">
         <CardBody>
-          {campaign.banner.map((bann, index) => {
-            return <Image key={index} src={bann.image} />;
-          })}
-          <Stack mt="6" spacing="3">
-            <Heading size="md">{campaign.title}</Heading>
-            <Text>{campaign.description}</Text>
-            <Text color="blue.600" fontSize="md">
-              Current Donation {campaign.currentDonation}
-            </Text>
-          </Stack>
+          <Link href={`/campaigns/${campaign.id}`}>
+            {campaign.banner.map((bann, index) => {
+              return <Image key={index} src={bann.image} />;
+            })}
+            <Stack mt="6" spacing="3">
+              <Heading size="md">{campaign.title}</Heading>
+              <Text>{campaign.description}</Text>
+              <Text color="blue.600" fontSize="md">
+                Current Donation {campaign.currentDonation}
+              </Text>
+            </Stack>
+          </Link>
         </CardBody>
         <Divider />
         <CardFooter>
@@ -36,7 +38,7 @@ function CampaignCard(props) {
           </ButtonGroup>
         </CardFooter>
       </Card>
-    </Link>
+    </>
   );
 }
 
