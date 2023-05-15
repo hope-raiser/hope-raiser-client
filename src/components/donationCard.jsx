@@ -8,7 +8,7 @@ import {
     VStack 
 } from "@chakra-ui/react";
 
-function donationCard() {
+function DonationCard() {
     const handleDonationSubmit = async (e) => {
         e.preventDefault();
         console.log(e.target.donationAmount.value);
@@ -17,7 +17,6 @@ function donationCard() {
     return (
         <form onSubmit={handleDonationSubmit}>
             <VStack>
-                <Text>Add Donation to This</Text>
                 <FormControl isRequired>
                     <FormLabel>Amount</FormLabel>
                     <Input name="amount"/>
@@ -28,4 +27,4 @@ function donationCard() {
     )
 }
 
-export default donationCard;
+export default DonationCard;
