@@ -32,21 +32,21 @@ export default function CampaignDetails({ id }) {
       const data = await getCampaignDetail(id);
       setCampaign(data);
       setLoading(false);
-    }
+    };
     fetchCampaign();
   }, []);
 
   const handleDeleteCampaign = async () => {
     await deleteCampaignById(id);
     router.push("/");
-  }
+  };
 
   if (isLoading) {
     return (
       <>
-        <CircularProgress isIndeterminate color='green.300' />
+        <CircularProgress isIndeterminate color="green.300" />
       </>
-    )
+    );
   }
 
   return (
@@ -80,7 +80,7 @@ export async function getServerSideProps(ctx) {
   const { id } = ctx.query;
   return {
     props: {
-      id,
-    },
+      id
+    }
   };
 }
