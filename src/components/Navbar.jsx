@@ -7,10 +7,26 @@ import {
 	Input,
 	Text,
 	VStack,
+	Spacer,
+	DarkMode,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
+import { useEffect, useState } from "react";
+
 const Navbar = () => {
+	const [isLogin, setIsLogin] = useState(false);
+
+	useEffect(() => {
+		const token = window.localStorage.getItem("token");
+
+		if (token) {
+			setIsLogin(true);
+		} else {
+			setIsLogin(false);
+		}
+	}, [window.localStorage.getItem("token")]);
+
 	return (
 		<Flex
 			w="full"
@@ -19,6 +35,7 @@ const Navbar = () => {
 			justify="space-between"
 			wrap="wrap"
 			padding="1rem"
+			sx={{ position: "sticky", top: 0 }}
 			bg="teal.500"
 			color="white"
 		>
@@ -29,6 +46,26 @@ const Navbar = () => {
 					</Text>
 				</Flex>
 			</Link>
+			<Spacer />
+			{!isLogin ? (
+				<Link href="/login">
+					<DarkMode>
+						<Button colorScheme="blue"> Login </Button>
+					</DarkMode>
+				</Link>
+			) : (
+				<DarkMode>
+					<Button
+						colorScheme="blue"
+						onClick={() => {
+							window.localStorage.removeItem("token");
+							setIsLogin(false);
+						}}
+					>
+						Logout
+					</Button>
+				</DarkMode>
+			)}
 		</Flex>
 	);
 };

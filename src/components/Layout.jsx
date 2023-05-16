@@ -8,6 +8,7 @@ const {
 } = require("@chakra-ui/react");
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Navbar from "./Navbar";
 
 function Layout({ children }) {
 	const [isLogin, setIsLogin] = useState(false);
@@ -24,36 +25,7 @@ function Layout({ children }) {
 
 	return (
 		<>
-			<Flex
-				padding={4}
-				sx={{ position: "sticky", top: 0 }}
-				backgroundColor="blue.200"
-				color="teal.700"
-			>
-				<Text as="b" fontSize="xl">
-					<Link href="/">Hope Raiser</Link>
-				</Text>
-				<Spacer />
-				{!isLogin ? (
-					<Link href="/login">
-						<DarkMode>
-							<Button colorScheme="blue"> Login </Button>
-						</DarkMode>
-					</Link>
-				) : (
-					<DarkMode>
-						<Button
-							colorScheme="blue"
-							onClick={() => {
-								window.localStorage.removeItem("token");
-								setIsLogin(false);
-							}}
-						>
-							Logout
-						</Button>
-					</DarkMode>
-				)}
-			</Flex>
+			<Navbar></Navbar>
 			{children}
 		</>
 	);
