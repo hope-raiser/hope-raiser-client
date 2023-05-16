@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { getAllDonation } from '@/modules/fetch/donations'
 
 function Donation({ id }) {
-    const [donations, setDonations] = useState("");
+    const [donations, setDonations] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
 
@@ -32,7 +32,7 @@ function Donation({ id }) {
                 <VStack>
                     <Heading as='h3' size='lg'>
                         Donations
-                        {donations.map((donation, idx) => {
+                        {donations.data.map((donation, idx) => {
                             return (
                                 <Stack key={idx} direction='row' h='100px' p={4}>
                                     <Divider orientation='vertical' />
