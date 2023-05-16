@@ -7,19 +7,22 @@ import {
     Text, 
     VStack 
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
-function DonationCard() {
+function DonationCard({id}) {
+    const [amount, setAmount] = useState("")
+    // function Submit Donation
     const handleDonationSubmit = async (e) => {
         e.preventDefault();
-        console.log(e.target.donationAmount.value);
-        const data = await createNewDonation(e.target);
+        const data = await createNewDonation(amount, id);
     }
     return (
         <form onSubmit={handleDonationSubmit}>
             <VStack>
                 <FormControl isRequired>
                     <FormLabel>Amount</FormLabel>
-                    <Input name="amount"/>
+                    <Input name="amount" type="number" onChange={(e) => setAmount(e.target.value)} />
                 </FormControl>
                 <Button type="submit">Donation</Button>
             </VStack>
@@ -27,4 +30,5 @@ function DonationCard() {
     )
 }
 
-export default DonationCard;
+
+export default DonationCard; 
