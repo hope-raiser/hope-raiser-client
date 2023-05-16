@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getCampaignDetail } from "@/modules/fetch/campaigns";
 import { deleteCampaignById } from "@/modules/fetch/campaigns";
 import { useRouter } from "next/router";
+import Layout from "@/components/Layout";
 
 export default function CampaignDetails({ id }) {
   const [campaign, setCampaign] = useState({});
@@ -33,17 +34,19 @@ export default function CampaignDetails({ id }) {
 
   return (
     <div>
-      <Flex my="6">
-        <Box w="300px">
-          <Text>{campaign.title}</Text>
-          <Button onClick={handleDeleteCampaign} colorScheme="red">
-            Delete
-          </Button>
-          <Button variant="solid" ml="5" colorScheme="orange" onClick={() => router.replace(`./${campaign.id}/edit`)}>
-            Update
-          </Button>
-        </Box>
-      </Flex>
+      <Layout>
+        <Flex my="6">
+          <Box w="300px">
+            <Text>{campaign.title}</Text>
+            <Button onClick={handleDeleteCampaign} colorScheme="red">
+              Delete
+            </Button>
+            <Button variant="solid" ml="5" colorScheme="orange" onClick={() => router.replace(`./${campaign.id}/edit`)}>
+              Update
+            </Button>
+          </Box>
+        </Flex>
+      </Layout>
     </div>
   );
 }
