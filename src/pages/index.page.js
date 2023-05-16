@@ -7,41 +7,42 @@ import { useEffect, useState } from "react";
 import { getAllCampaign } from "@/modules/fetch/campaigns";
 import { SimpleGrid, CircularProgress } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import Navbar from "@/components/Navbar.jsx";
 
 const Home = ({ query }) => {
-  const [campaigns, setCampaign] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const router = useRouter();
-  const { category_id } = router.query;
+	const [campaigns, setCampaign] = useState([]);
+	const [isLoading, setLoading] = useState(true);
+	const router = useRouter();
+	const { category_id } = router.query;
 
-  useEffect(() => {
-    Promise.all([getAllCampaign(category_id)]).then((values) => {
-      setCampaign(...values);
-      setLoading(false);
-    });
-  }, []);
+	useEffect(() => {
+		Promise.all([getAllCampaign(category_id)]).then((values) => {
+			setCampaign(...values);
+			setLoading(false);
+		});
+	}, []);
 
-  if (isLoading) {
-    return (
-      <>
-        <CircularProgress isIndeterminate color="green.300" />
-      </>
-    );
-  }
+	if (isLoading) {
+		return (
+			<>
+				<CircularProgress isIndeterminate color="green.300" />
+			</>
+		);
+	}
 
-  return (
-    <Layout>
-      <SimpleGrid columns={3} spacing={6} justifyContent="center">
-        {campaigns.data.map((campaign, idx) => (
-          <CampaignCard campaign={campaign} key={idx} />
-        ))}
-      </SimpleGrid>
-    </Layout>
-  );
+	return (
+		<Layout>
+			<SimpleGrid columns={3} spacing={6} justifyContent="center">
+				{campaigns.data.map((campaign, idx) => (
+					<CampaignCard campaign={campaign} key={idx} />
+				))}
+			</SimpleGrid>
+		</Layout>
+	);
 };
 
 Home.getInitialProps = ({ query }) => {
-  return query;
+	return query;
 };
 
 export default Home;
