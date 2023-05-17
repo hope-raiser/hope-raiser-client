@@ -1,21 +1,20 @@
 import Layout from "@/components/Layout";
 import { useEffect, useState } from "react";
-import { getAllCampaign } from "@/modules/fetch/campaigns";
 import { useRouter } from "next/router";
 import { Heading, Button } from "@chakra-ui/react";
+import { getAllBookmark } from "@/modules/fetch/bookmarks";
 
-function Campaign() {
-	const [campaigns, setCampaign] = useState([]);
+function Bookmark() {
+	const [bookmarks, setBookmarks] = useState([]);
 	const [isLoading, setLoading] = useState(true);
 	const router = useRouter();
 
 	useEffect(() => {
-		Promise.all([getAllCampaign()]).then((values) => {
-			setCampaign(...values);
+		Promise.all([getAllBookmark()]).then((values) => {
+			setBookmarks(...values);
 			setLoading(false);
 		});
 	}, []);
-
 	if (isLoading) {
 		return (
 			<>
@@ -27,10 +26,10 @@ function Campaign() {
 	return (
 		<>
 			<Layout>
-				<Heading>INI HALAMAN CAMPAIGN</Heading>
+				<Heading>Ini halaman tersimpan</Heading>
 			</Layout>
 		</>
 	);
 }
 
-export default Campaign;
+export default Bookmark;

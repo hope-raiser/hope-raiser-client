@@ -19,7 +19,7 @@ import { useRouter } from "next/router";
 import { createNewComment, deleteCommentById, getAllComment } from "@/modules/fetch/comments";
 
 function Comment({ id }) {
-  const [comments, setComments] = useState("");
+  const [comments, setComments] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -77,7 +77,7 @@ function Comment({ id }) {
         <VStack>
           <Heading as="h3" size="lg">
             Comments
-            {comments.map((comment, idx) => {
+            {comments.data.map((comment, idx) => {
               return (
                 <Stack direction="row" h="100px" p={4} key={idx}>
                   <Divider orientation="vertical" />

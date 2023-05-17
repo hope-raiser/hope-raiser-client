@@ -1,16 +1,34 @@
-const { Flex, Text, Link } = require("@chakra-ui/react");
+const {
+	Flex,
+	Text,
+	HStack,
+	Button,
+	Spacer,
+	DarkMode,
+} = require("@chakra-ui/react");
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Navbar from "./Navbar";
 
 function Layout({ children }) {
-  return (
-    <>
-      <Flex padding={4} sx={{ position: "sticky", top: 0 }} backgroundColor="teal.200" color="teal.700">
-        <Text as="b" fontSize="xl">
-          <Link href="/">Hope Raiser</Link>
-        </Text>
-      </Flex>
-      {children}
-    </>
-  );
+	const [isLogin, setIsLogin] = useState(false);
+
+	useEffect(() => {
+		const token = window.localStorage.getItem("token");
+
+		if (token) {
+			setIsLogin(true);
+		} else {
+			setIsLogin(false);
+		}
+	}, [window.localStorage.getItem("token")]);
+
+	return (
+		<>
+			<Navbar></Navbar>
+			{children}
+		</>
+	);
 }
 
 export default Layout;
