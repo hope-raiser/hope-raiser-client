@@ -5,6 +5,7 @@ import { deleteCampaignById } from "@/modules/fetch/campaigns";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import Link from "next/link";
+import DonationCard from "@/components/donationCard";
 
 export default function CampaignDetails({ id }) {
   const [campaign, setCampaign] = useState({});
@@ -79,6 +80,7 @@ export default function CampaignDetails({ id }) {
                 Update
               </Button>
             </Flex>
+            <DonationCard id={id}/>
           </Box>
         </Wrap>
         <Wrap spacing='30px' bg="gray.100" justify='center' pt="2">
