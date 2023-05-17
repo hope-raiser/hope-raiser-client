@@ -44,11 +44,11 @@ export default function CampaignDetails({ id }) {
             display="flex"
             flexDirection="column"
             bg="white"
-            boxSize='400px'
+            boxSize='450px'
           >
             {campaign.banner.map((bann, index) => {
               return <Image key={index}
-                boxSize='350px'
+                boxSize='420px'
                 objectFit='cover'
                 src={bann.image}
                 alt='Dan Abramov'
@@ -57,11 +57,16 @@ export default function CampaignDetails({ id }) {
             <Text as='b' mt="1" fontSize='lg'>{campaign.title}</Text>
             <Text fontSize='md'>{campaign.description}</Text>
             <Flex mt="2">
-              <Text color='blue.400' as='b' fontSize='xs'>Rp{campaign.currentDonation}</Text>
+              <Text fontSize="xs" >
+                <Text as="span">Current Donation </Text>
+                <Text mt="2" as="span" color="teal.500"fontWeight="bold">
+                Rp{campaign.currentDonation}
+                </Text>
+              </Text>
               <Spacer />
               <Text fontSize="xs" >
                 <Text as="span">Goal </Text>
-                <Text mt="2" as="span" fontWeight="bold">
+                <Text mt="2" as="span" color="teal.500"fontWeight="bold">
                   Rp{campaign.goal}
                 </Text>
               </Text>
@@ -83,15 +88,15 @@ export default function CampaignDetails({ id }) {
             display="flex"
             flexDirection="column"
             bg="white"
-            boxSize='400px'>
+            boxSize='450px'>
             <Link href={`/campaigns/${campaign.id}/comments`}>
               <Text as='b'>Comments</Text>
             </Link>
             {campaign.comment.map((com, index) => {
               return <Stack key={index} direction="row" h="100px" p={4}>
-                <Divider orientation="vertical" />
+                <Divider borderWidth="2px" orientation="vertical" />
                 <Text fontSize="md" >
-                  {com.content}
+                  {com.user.name}<br></br>{com.content}
                 </Text>
               </Stack>
             })}
@@ -104,18 +109,15 @@ export default function CampaignDetails({ id }) {
             display="flex"
             flexDirection="column"
             bg="white"
-            boxSize='400px'>
+            boxSize='450px'>
             <Link href={`/campaigns/${campaign.id}/donations`}>
               <Text as='b'>Donations</Text>
             </Link>
             {campaign.donations.map((don, index) => {
               return <Stack key={index} direction="row" h="100px" p={4}>
-                <Divider orientation="vertical" />
+                <Divider borderWidth="2px" orientation="vertical" />
                 <Text fontSize="md" >
-                  {don.amount}
-                </Text>
-                <Text fontSize="md" >
-                  {don.user}
+                 {don.user.name}<br></br>{don.amount}
                 </Text>
               </Stack>
             })}
