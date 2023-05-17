@@ -80,7 +80,7 @@ export default function CampaignDetails({ id }) {
                 Update
               </Button>
             </Flex>
-            <DonationCard id={id}/>
+            <DonationCard id={id} setCampaign={setCampaign}/>
           </Box>
         </Wrap>
         <Wrap spacing='30px' bg="gray.100" justify='center' pt="2">
