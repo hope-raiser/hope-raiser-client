@@ -1,39 +1,15 @@
-<<<<<<< HEAD
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Flex,
-  Heading,
-  HStack,
-  Image,
-  Text,
-  Modal,
-  useDisclosure,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody
-} from "@chakra-ui/react";
-=======
 import { Box, Button, CircularProgress, Divider, Flex, Heading, HStack, Image, Spacer, Stack, Text, Wrap } from "@chakra-ui/react";
->>>>>>> development
 import { useEffect, useState } from "react";
 import { getCampaignDetail } from "@/modules/fetch/campaigns";
 import { deleteCampaignById } from "@/modules/fetch/campaigns";
 import { useRouter } from "next/router";
-<<<<<<< HEAD
-import DonationCard from "@/components/donationCard";
-=======
 import Layout from "@/components/Layout";
 import Link from "next/link";
->>>>>>> development
+import DonationCard from "@/components/donationCard";
 
 export default function CampaignDetails({ id }) {
   const [campaign, setCampaign] = useState({});
   const [isLoading, setLoading] = useState(true);
-  const [isOpen, onOpen, onClose] = useDisclosure()
   const router = useRouter();
 
   useEffect(() => {
@@ -60,29 +36,6 @@ export default function CampaignDetails({ id }) {
 
   return (
     <div>
-<<<<<<< HEAD
-      <Flex my="6">
-        <Box w="300px">
-          <Text>{campaign.title}</Text>
-          <Button onClick={handleDeleteCampaign} colorScheme="red">
-            Delete
-          </Button>
-          <Button onClick={onOpen} colorScheme="green">Donation</Button>
-          <Modal isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay>
-              <ModalContent>
-                <ModalHeader>Add Donation to this Project</ModalHeader>
-                <ModalCloseButton/>
-                <ModalBody>
-                  <DonationCard campaignId={id} onClose={onClose} />
-                </ModalBody>
-              </ModalContent>
-            </ModalOverlay>
-              <DonationCard/>
-          </Modal>
-        </Box>
-      </Flex>
-=======
       <Layout>
         <Wrap spacing='30px' justify='center' bg="gray.100">
           <Box
@@ -127,6 +80,7 @@ export default function CampaignDetails({ id }) {
                 Update
               </Button>
             </Flex>
+            <DonationCard id={id}/>
           </Box>
         </Wrap>
         <Wrap spacing='30px' bg="gray.100" justify='center' pt="2">
@@ -172,7 +126,6 @@ export default function CampaignDetails({ id }) {
           </Box>
         </Wrap>
       </Layout>
->>>>>>> development
     </div>
   );
 }
