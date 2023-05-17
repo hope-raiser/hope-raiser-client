@@ -1,14 +1,26 @@
-import { Button, useToast, CircularProgress, Container, FormControl, FormLabel, Input, VStack, ButtonGroup } from "@chakra-ui/react";
+import {
+  Button,
+  CircularProgress,
+  FormControl,
+  FormLabel,
+  Input,
+  Box,
+  Stack,
+  Heading,
+  InputGroup,
+  InputRightElement,
+  Center
+} from "@chakra-ui/react";
+import { CalendarIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { editCampaign, getCampaignDetail } from "@/modules/fetch/campaigns";
-import Layout from "@/components/Layout";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
-import Swal from "sweetalert2";
 
 function UpdateCampaign({ id }) {
   const router = useRouter();
   const [campaign, setCampaign] = useState("");
+
   const [isLoading, setLoading] = useState(true);
 
   const [title, setTitle] = useState("");
@@ -24,6 +36,7 @@ function UpdateCampaign({ id }) {
     setDescription(data.description);
     setGoal(data.goal);
     setEndDate(new Date(data.endDate));
+
     setLoading(false);
   };
 
@@ -42,6 +55,7 @@ function UpdateCampaign({ id }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
     const payload = {
       title,
       description,
@@ -49,21 +63,21 @@ function UpdateCampaign({ id }) {
       endDate
     };
 
-    const response = await editCampaign(id, payload);
-    fetchCampaign();
+    await editCampaign(id, payload);
 
-    if (response) {
-      setTimeout(() => {
-        router.push("/");
-      }, 1600);
-    }
+    fetchCampaign();
   }
 
   return (
-    <Layout>
-      <Container>
-        <form onSubmit={handleSubmit}>
-          <VStack spacing="4" p="4">
+    <Center h="100vh" bg="gray.100">
+      <Stack>
+        <Stack mx={12}>
+          <Heading fontSize={"4xl"} textAlign={"center"} mb={4}>
+            Edit Your Campaign
+          </Heading>
+        </Stack>
+        <Box rounded={"xl"} boxShadow={"lg"} p={8} bg={"#fefefe"}>
+          <Stack spacing={4}>
             <FormControl>
               <FormLabel>Title</FormLabel>
               <Input name="title" defaultValue={campaign.title} onChange={(e) => setTitle(e.target.value)} />
@@ -73,21 +87,47 @@ function UpdateCampaign({ id }) {
               <Input name="description" defaultValue={campaign.description} onChange={(e) => setDescription(e.target.value)} />
             </FormControl>
             <FormControl>
-              <FormLabel>Target Donation</FormLabel>
-              <Input name="goal" type="number" defaultValue={campaign.goal} onChange={(e) => setGoal(e.target.value)} />
+              <FormLabel>Target Donation (Rp)</FormLabel>
+              <Input type="integer" name="goal" defaultValue={goal} onChange={(e) => setGoal(e.target.value)} />
             </FormControl>
             <FormControl>
               <FormLabel>End Date</FormLabel>
-              <SingleDatepicker name="endDate" date={endDate} onDateChange={setEndDate} />
+              <InputGroup>
+                <SingleDatepicker name="endDate" date={endDate} onDateChange={setEndDate} />
+                <InputRightElement pointerEvents="none">
+                  <CalendarIcon color="gray.300" />
+                </InputRightElement>
+              </InputGroup>
             </FormControl>
-            <ButtonGroup>
-              <Button type="submit">Update Campaign</Button>
-              <Button onClick={() => router.push("/")}>Cancel</Button>
-            </ButtonGroup>
-          </VStack>
-        </form>
-      </Container>
-    </Layout>
+            <Stack spacing={4} direction={["column", "row"]}>
+              <Button
+                bg={"blue.400"}
+                color={"white"}
+                _hover={{
+                  bg: "blue.500"
+                }}
+                type="submit"
+                w="full"
+                onClick={handleSubmit}
+              >
+                Update
+              </Button>
+              <Button
+                bg={"red.400"}
+                color={"white"}
+                _hover={{
+                  bg: "red.500"
+                }}
+                w="full"
+                onClick={() => router.push(`/campaigns/${campaign.id}`)}
+              >
+                Cancel
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+      </Stack>
+    </Center>
   );
 }
 
