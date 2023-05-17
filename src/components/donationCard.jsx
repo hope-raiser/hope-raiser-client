@@ -5,17 +5,28 @@ import {
     FormLabel, 
     Input, 
     Text, 
-    VStack 
+    VStack,
+    useToast
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 function DonationCard({id}) {
+    const router = useRouter();
+    const toast = useToast();
     const [amount, setAmount] = useState("")
     // function Submit Donation
     const handleDonationSubmit = async (e) => {
         e.preventDefault();
-        const data = await createNewDonation(amount, id);
+        const data = await createNewDonation({amount, campaignId: id});
+        toast({
+            title: "Donation Success",
+            description: "Thanks for your support",
+            status: "success",
+            duration: 3000,
+            isClosable: true
+        });
+        router.push(`/campaigns/${id}`)
     }
     return (
         <form onSubmit={handleDonationSubmit}>
@@ -29,6 +40,7 @@ function DonationCard({id}) {
         </form>    
     )
 }
+
 
 
 export default DonationCard; 
