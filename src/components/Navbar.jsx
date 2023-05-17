@@ -3,10 +3,9 @@ import {
 	Flex,
 	FormControl,
 	FormLabel,
-	HStack,
+	Stack,
 	Input,
 	Text,
-	VStack,
 	Spacer,
 	DarkMode,
 } from "@chakra-ui/react";
@@ -46,6 +45,24 @@ const Navbar = () => {
 					</Text>
 				</Flex>
 			</Link>
+			<Stack direction="row">
+				<Link href="/categories">
+					<Button colorScheme="white" variant="link">
+						Categories
+					</Button>
+				</Link>
+				<Link href="/campaigns">
+					<Button colorScheme="white" variant="link">
+						Campaigns
+					</Button>
+				</Link>
+				<Link href="/bookmarks">
+					<Button colorScheme="white" variant="link">
+						Saved
+					</Button>
+				</Link>
+			</Stack>
+
 			<Spacer />
 			{!isLogin ? (
 				<Link href="/login">
