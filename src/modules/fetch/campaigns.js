@@ -1,12 +1,15 @@
 import { instance } from "../axios/index.js";
 import Swal from "sweetalert2";
 
-async function getAllCampaign(category_id) {
+async function getAllCampaign(params) {
   try {
     let path = "/campaigns";
+    const {category_id, limit, page} = params
+    
     if (category_id) {
       path = `campaigns?category_id=${category_id}`;
     }
+    path += `&page=${page}`;
     const response = await instance.get(path);
     return response.data;
   } catch (error) {

@@ -5,19 +5,21 @@ import Layout from "@/components/Layout";
 import CampaignCard from "../components/CampaignCard.jsx";
 import { useEffect, useState } from "react";
 import { getAllCampaign } from "@/modules/fetch/campaigns";
-import { SimpleGrid, CircularProgress } from "@chakra-ui/react";
+import { SimpleGrid, CircularProgress, Box, Text, HStack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Navbar from "@/components/Navbar.jsx";
 
 const Home = ({ query }) => {
 	const [campaigns, setCampaign] = useState([]);
 	const [isLoading, setLoading] = useState(true);
+	const [page, setPage] = useState(1)
 	const router = useRouter();
 	const { category_id } = router.query;
 
 	useEffect(() => {
-		Promise.all([getAllCampaign(category_id)]).then((values) => {
+		Promise.all([getAllCampaign({ category_id, page })]).then((values) => {
 			setCampaign(...values);
+			
 			setLoading(false);
 		});
 	}, []);
@@ -29,13 +31,29 @@ const Home = ({ query }) => {
 			</>
 		);
 	}
+	async function changePage(inputPage) {
+		const data = await getAllCampaign({page: inputPage});
+		setCampaign(data);
+		setLoading(false);
+	}
 
+	function proccessPaginations(){
+		let pagination = []
+		for(let i = 0; i < campaigns.totalPages; i++){
+			pagination.push(<Text key={i} onClick={() => changePage(i+1) }>{i+1}</Text>)
+		}
+		return pagination
+	}
 	return (
 		<Layout>
 			<SimpleGrid mt="3" columns={3} spacing={6} justifyContent="center">
 				{campaigns.data.map((campaign, idx) => (
-					<CampaignCard  campaign={campaign} key={idx} />
+					<CampaignCard campaign={campaign} key={idx} />
 				))}
+				<Box>
+					<HStack >{(proccessPaginations())}</HStack>
+				</Box>
+
 			</SimpleGrid>
 		</Layout>
 	);
