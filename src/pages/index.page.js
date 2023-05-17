@@ -32,9 +32,9 @@ const Home = ({ query }) => {
 
 	return (
 		<Layout>
-			<SimpleGrid columns={3} spacing={6} justifyContent="center">
+			<SimpleGrid mt="3" columns={3} spacing={6} justifyContent="center">
 				{campaigns.data.map((campaign, idx) => (
-					<CampaignCard campaign={campaign} key={idx} />
+					<CampaignCard  campaign={campaign} key={idx} />
 				))}
 			</SimpleGrid>
 		</Layout>
