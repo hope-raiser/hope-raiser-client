@@ -1,9 +1,10 @@
-import { Box, Button, CircularProgress, Flex, Heading, HStack, Image, Text } from "@chakra-ui/react";
+import { Box, Button, CircularProgress, Divider, Flex, Heading, HStack, Image, Spacer, Stack, Text, Wrap } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getCampaignDetail } from "@/modules/fetch/campaigns";
 import { deleteCampaignById } from "@/modules/fetch/campaigns";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
+import Link from "next/link";
 
 export default function CampaignDetails({ id }) {
   const [campaign, setCampaign] = useState({});
@@ -35,17 +36,91 @@ export default function CampaignDetails({ id }) {
   return (
     <div>
       <Layout>
-        <Flex my="6">
-          <Box w="300px">
-            <Text>{campaign.title}</Text>
-            <Button onClick={handleDeleteCampaign} colorScheme="red">
-              Delete
-            </Button>
-            <Button variant="solid" ml="5" colorScheme="orange" onClick={() => router.replace(`./${campaign.id}/edit`)}>
-              Update
-            </Button>
+        <Wrap spacing='30px' justify='center' bg="gray.100">
+          <Box
+            p={4}
+            borderRadius="md"
+            boxShadow="md"
+            display="flex"
+            flexDirection="column"
+            bg="white"
+            boxSize='400px'
+          >
+            {campaign.banner.map((bann, index) => {
+              return <Image key={index}
+                boxSize='350px'
+                objectFit='cover'
+                src={bann.image}
+                alt='Dan Abramov'
+              />
+            })}
+            <Text as='b' mt="1" fontSize='lg'>{campaign.title}</Text>
+            <Text fontSize='md'>{campaign.description}</Text>
+            <Flex mt="2">
+              <Text color='blue.400' as='b' fontSize='xs'>Rp{campaign.currentDonation}</Text>
+              <Spacer />
+              <Text fontSize="xs" >
+                <Text as="span">Goal </Text>
+                <Text mt="2" as="span" fontWeight="bold">
+                  Rp{campaign.goal}
+                </Text>
+              </Text>
+            </Flex>
+            <Flex>
+              <Button onClick={handleDeleteCampaign} colorScheme="red" mr="2" >
+                Delete
+              </Button>
+              <Button variant="solid" colorScheme="orange" onClick={() => router.replace(`./${campaign.id}/edit`)}>
+                Update
+              </Button>
+            </Flex>
           </Box>
-        </Flex>
+        </Wrap>
+        <Wrap spacing='30px' bg="gray.100" justify='center' pt="2">
+          <Box p={4}
+            borderRadius="md"
+            boxShadow="md"
+            display="flex"
+            flexDirection="column"
+            bg="white"
+            boxSize='400px'>
+            <Link href={`/campaigns/${campaign.id}/comments`}>
+              <Text as='b'>Comments</Text>
+            </Link>
+            {campaign.comment.map((com, index) => {
+              return <Stack key={index} direction="row" h="100px" p={4}>
+                <Divider orientation="vertical" />
+                <Text fontSize="md" >
+                  {com.content}
+                </Text>
+              </Stack>
+            })}
+          </Box>
+        </Wrap>
+        <Wrap spacing='30px' bg="gray.100" justify='center' pt="2">
+          <Box p={4}
+            borderRadius="md"
+            boxShadow="md"
+            display="flex"
+            flexDirection="column"
+            bg="white"
+            boxSize='400px'>
+            <Link href={`/campaigns/${campaign.id}/donations`}>
+              <Text as='b'>Donations</Text>
+            </Link>
+            {campaign.donations.map((don, index) => {
+              return <Stack key={index} direction="row" h="100px" p={4}>
+                <Divider orientation="vertical" />
+                <Text fontSize="md" >
+                  {don.amount}
+                </Text>
+                <Text fontSize="md" >
+                  {don.user}
+                </Text>
+              </Stack>
+            })}
+          </Box>
+        </Wrap>
       </Layout>
     </div>
   );
