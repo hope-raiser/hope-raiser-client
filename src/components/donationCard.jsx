@@ -10,8 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { getCampaignDetail } from "@/modules/fetch/campaigns";
 
-function DonationCard({id}) {
+function DonationCard({id, setCampaign}) {
     const router = useRouter();
     const toast = useToast();
     const [amount, setAmount] = useState("")
@@ -26,6 +27,9 @@ function DonationCard({id}) {
             duration: 3000,
             isClosable: true
         });
+        const refectCampaign = await getCampaignDetail(id);
+        setCampaign(refectCampaign);
+        
         router.push(`/campaigns/${id}`)
     }
     return (
