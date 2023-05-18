@@ -60,14 +60,14 @@ export default function CampaignDetails({ id }) {
             <Flex mt="2">
               <Text fontSize="xs" >
                 <Text as="span">Current Donation </Text>
-                <Text mt="2" as="span" color="teal.500"fontWeight="bold">
-                Rp{campaign.currentDonation}
+                <Text mt="2" as="span" color="teal.500" fontWeight="bold">
+                  Rp{campaign.currentDonation}
                 </Text>
               </Text>
               <Spacer />
               <Text fontSize="xs" >
                 <Text as="span">Goal </Text>
-                <Text mt="2" as="span" color="teal.500"fontWeight="bold">
+                <Text mt="2" as="span" color="teal.500" fontWeight="bold">
                   Rp{campaign.goal}
                 </Text>
               </Text>
@@ -80,7 +80,7 @@ export default function CampaignDetails({ id }) {
                 Update
               </Button>
             </Flex>
-            <DonationCard id={id} setCampaign={setCampaign}/>
+
           </Box>
         </Wrap>
         <Wrap spacing='30px' bg="gray.100" justify='center' pt="2">
@@ -119,10 +119,22 @@ export default function CampaignDetails({ id }) {
               return <Stack key={index} direction="row" h="100px" p={4}>
                 <Divider borderWidth="2px" orientation="vertical" />
                 <Text fontSize="md" >
-                 {don.user.name}<br></br>{don.amount}
+                  {don.user.name}<br></br>Rp{don.amount}
                 </Text>
               </Stack>
             })}
+
+          </Box>
+        </Wrap>
+        <Wrap spacing='30px' bg="gray.100" justify='center' pt="2">
+          <Box p={4}
+            borderRadius="md"
+            boxShadow="md"
+            display="flex"
+            flexDirection="column"
+            bg="white"
+            boxSize='450px'>
+            <DonationCard id={id} setCampaign={setCampaign} />
           </Box>
         </Wrap>
       </Layout>

@@ -40,7 +40,7 @@ function Donation({ id }) {
                                         </Box>
                                         <VStack align="flex-start">
                                             <Text mb="4" fontSize="sm"  >{donation.user.name} </Text>
-                                            <Text fontSize="lg" as='b'>{donation.amount}</Text>
+                                            <Text fontSize="lg" as='b'>Rp{donation.amount}</Text>
                                         </VStack>
                                     </HStack>
                                 </Box>
