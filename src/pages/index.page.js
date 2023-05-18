@@ -1,6 +1,3 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "@/styles/Home.module.css";
 import Layout from "@/components/Layout";
 import CampaignCard from "../components/CampaignCard.jsx";
 import { useEffect, useState } from "react";
@@ -11,9 +8,9 @@ import {
 	Box,
 	HStack,
 	Text,
+	Flex,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import Navbar from "@/components/Navbar.jsx";
 
 const Home = ({ query }) => {
 	const [campaigns, setCampaign] = useState([]);
@@ -32,7 +29,9 @@ const Home = ({ query }) => {
 	if (isLoading) {
 		return (
 			<>
-				<CircularProgress isIndeterminate color="green.300" />
+				<Flex height="full" width="full" align="center">
+					<CircularProgress isIndeterminate color="green.300" />
+				</Flex>
 			</>
 		);
 	}
@@ -57,7 +56,13 @@ const Home = ({ query }) => {
 
 	return (
 		<Layout>
-			<SimpleGrid mt="3" columns={3} spacing={6} justifyContent="center">
+			<SimpleGrid
+				mt="3"
+				p="5"
+				columns={3}
+				spacing={6}
+				justifyContent="center"
+			>
 				{campaigns.data.map((campaign, idx) => (
 					<CampaignCard campaign={campaign} key={idx} />
 				))}

@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import { useEffect, useState } from "react";
 import { getAllCampaign } from "@/modules/fetch/campaigns";
 import { useRouter } from "next/router";
-import { Heading, Button } from "@chakra-ui/react";
+import { Heading, Button, Flex, CircularProgress } from "@chakra-ui/react";
 
 function Campaign() {
 	const [campaigns, setCampaign] = useState([]);
@@ -19,7 +19,9 @@ function Campaign() {
 	if (isLoading) {
 		return (
 			<>
-				<h1>IS LOADINGGGGG........</h1>
+				<Flex height="full" width="full" align="center">
+					<CircularProgress isIndeterminate color="green.300" />
+				</Flex>
 			</>
 		);
 	}
