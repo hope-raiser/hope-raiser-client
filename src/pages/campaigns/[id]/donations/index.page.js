@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout'
 import { useEffect, useState } from 'react'
-import { Box, Button, CircularProgress, Divider, Heading, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react'
+import { Box, Button, CircularProgress, Divider, HStack, Heading, SimpleGrid, Stack, Text, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { getAllDonation } from '@/modules/fetch/donations'
 
@@ -30,7 +30,24 @@ function Donation({ id }) {
         <>
             <Layout>
                 <VStack>
-                    <Heading as='h3' size='lg'>
+                    <Heading as="h3" size="lg" mt="3" >
+                        Donations
+                        {donations.data.map((donation, idx) => {
+                            return (
+                                <Box key={idx} boxShadow='md' rounded='md' bg='white' w="400px" h='80px' border='1px' borderColor='gray.200' m="3">
+                                    <HStack>
+                                        <Box h='80px' w='80px' border='1px' borderColor='gray.200'>
+                                        </Box>
+                                        <VStack align="flex-start">
+                                            <Text mb="4" fontSize="sm"  >{donation.user.name} </Text>
+                                            <Text fontSize="lg" as='b'>{donation.amount}</Text>
+                                        </VStack>
+                                    </HStack>
+                                </Box>
+                            );
+                        })}
+                    </Heading>
+                    {/* <Heading as='h3' size='lg'>
                         Donations
                         {donations.data.map((donation, idx) => {
                             return (
@@ -40,7 +57,7 @@ function Donation({ id }) {
                                 </Stack>
                             )
                         })}
-                    </Heading>
+                    </Heading> */}
                 </VStack>
             </Layout>
         </>

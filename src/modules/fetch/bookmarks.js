@@ -1,9 +1,13 @@
 import { instance } from "../axios/index.js";
 
 
-async function getAllBookmark() {
+async function getAllBookmark(id) {
     try {
-      const response = await instance.get("/bookmarks");
+      let path = "/bookmarks"
+      if(id) {
+          path += `?user_id=${id}`
+      }
+      const response = await instance.get(path);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message || "Something went wrong");
