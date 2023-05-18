@@ -1,11 +1,8 @@
-import { Inter, League_Gothic } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 import Layout from "@/components/Layout";
 import { useEffect, useState } from "react";
 import { CircularProgress, SimpleGrid, Box, Heading, Text, Center } from "@chakra-ui/react";
 import { getAllCategory } from "@/modules/fetch/categories";
 import { useRouter } from "next/router";
-import { Link } from "react-router-dom";
 
 function Category() {
   const [categories, setCategories] = useState("");
@@ -69,7 +66,6 @@ function Category() {
                   <Box
                     bg={category.color}
                     h={{ sm: 40, md: 64, lg: 80 }}
-                    maxW={80}
                     rounded={"md"}
                     display={"flex"}
                     alignItems={"flex-end"}
@@ -79,6 +75,8 @@ function Category() {
                         query: { category_id: category.id }
                       });
                     }}
+                    transition="ease .4s"
+                    _hover={{ transform: "scale(1.08)", color: "blackAlpha.800" }}
                     cursor={"pointer"}
                   >
                     <Text w="full" fontWeight={{ base: "semibold", sm: "bold" }} py={2} px={4} fontSize={{ base: "2xl", sm: "3xl" }}>
