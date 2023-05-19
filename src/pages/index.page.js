@@ -11,6 +11,7 @@ import {
 	Flex,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import useAuthStore from "@/modules/authStore";
 
 const Home = ({ query }) => {
 	const [campaigns, setCampaign] = useState([]);
@@ -18,13 +19,27 @@ const Home = ({ query }) => {
 	const [page, setPage] = useState(1);
 	const router = useRouter();
 	const { category_id } = router.query;
+	const userData = useAuthStore((state) => state.user);
 
 	useEffect(() => {
+		// Retrieve user data from local storage during initialization
+		const storedUser = localStorage.getItem("user");
+		if (storedUser) {
+		  const parsedUser = JSON.parse(storedUser); // parsing agar keterima sebagai local storage
+		  useAuthStore.setState({ user: parsedUser }); // setting user data ke local storage
+		}
+
 		Promise.all([getAllCampaign({ category_id, page })]).then((values) => {
 			setCampaign(...values);
 			setLoading(false);
 		});
 	}, []);
+
+	useEffect(() => {
+		// Store user data in local storage whenever it changes
+		localStorage.setItem("user", JSON.stringify(userData));
+	  }, [userData]);
+	
 
 	if (isLoading) {
 		return (
@@ -55,7 +70,7 @@ const Home = ({ query }) => {
 	}
 
 	return (
-		<Layout>
+		<Layout user={userData}>
 			<SimpleGrid
 				mt="3"
 				p="5"

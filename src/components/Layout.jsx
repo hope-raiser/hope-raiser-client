@@ -3,19 +3,22 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import useAuthStore from "@/modules/authStore";
+import { useRouter } from "next/router";
 
 function Layout({ children }) {
-  const [isLogin, setIsLogin] = useState(false);
+  // const [isLogin, setIsLogin] = useState(false);
+  const userData = useAuthStore((state) => state.user);
+  const router = useRouter();
+  // useEffect(() => {
+  //   const token = window.localStorage.getItem("token");
 
-  useEffect(() => {
-    const token = window.localStorage.getItem("token");
-
-    if (token) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, [window.localStorage.getItem("token")]);
+  //   if (token) {
+  //     setIsLogin(true);
+  //   } else {
+  //     setIsLogin(false);
+  //   }
+  // }, [window.localStorage.getItem("user")]);
 
   return (
     <>

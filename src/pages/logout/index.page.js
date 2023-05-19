@@ -15,6 +15,7 @@ const Logout = () => {
 
     const handleSubmit = async () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
         router.push('/login');
 }
     return <>

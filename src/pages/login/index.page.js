@@ -13,6 +13,7 @@ import { useState } from "react"
 import { loginUser } from "../../modules/fetch/users"
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import useAuthStore from "@/modules/authStore";
 
 
 function Login() {
@@ -20,17 +21,26 @@ function Login() {
     const router = useRouter();
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const setUser = useAuthStore((state) => state.setUser); // update the user state managed by the useAuthStore yang telah kita buat.
 
     const handleSubmit = async () => {
         try {
-            const response = await loginUser({ email, password })
-
-            router.push('/');
+          const response = await loginUser({ email, password });
+          console.log(
+            "handle response",
+            response
+          );
+    
+          // Update data user in the Zustand store (atau setting data user ke zustand agar disimpan)
+          setUser(response);
+    
+          router.push("/");
         } catch (error) {
-            console.error(error);
-            setShowAlert(true);
+          console.error(error);
+          setShowAlert(true);
         }
-    };
+      };
+
     return (
         <div>{
             <Container>
