@@ -9,37 +9,52 @@ import {
 	HStack,
 	Text,
 	Flex,
+	IconButton,
+	Container,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import useAuthStore from "@/modules/authStore";
+import { CopyIcon } from "@chakra-ui/icons";
+import { getLoginUser } from "@/modules/fetch/users.js";
 
 const Home = ({ query }) => {
 	const [campaigns, setCampaign] = useState([]);
 	const [isLoading, setLoading] = useState(true);
+	const [currentUser, setCurrentUser] = useState({})
 	const [page, setPage] = useState(1);
 	const router = useRouter();
 	const { category_id } = router.query;
 	const userData = useAuthStore((state) => state.user);
+	
+	const fetchCampaigns = async () => {
+		const data = await getAllCampaign({});
+		setCampaign(data);
+		
+		setLoading(false);
+	}
+
+	const fetchUser = async () => {
+		const userData = await getLoginUser();
+		setCurrentUser(userData);
+	}
 
 	useEffect(() => {
 		// Retrieve user data from local storage during initialization
 		const storedUser = localStorage.getItem("user");
 		if (storedUser) {
-		  const parsedUser = JSON.parse(storedUser); // parsing agar keterima sebagai local storage
-		  useAuthStore.setState({ user: parsedUser }); // setting user data ke local storage
+			const parsedUser = JSON.parse(storedUser); // parsing agar keterima sebagai local storage
+			useAuthStore.setState({ user: parsedUser }); // setting user data ke local storage
 		}
-
-		Promise.all([getAllCampaign({ category_id, page })]).then((values) => {
-			setCampaign(...values);
-			setLoading(false);
-		});
+		fetchUser();
+		fetchCampaigns();
 	}, []);
+
 
 	useEffect(() => {
 		// Store user data in local storage whenever it changes
 		localStorage.setItem("user", JSON.stringify(userData));
-	  }, [userData]);
-	
+	}, [userData]);
+
 
 	if (isLoading) {
 		return (
@@ -69,6 +84,8 @@ const Home = ({ query }) => {
 		return pagination;
 	}
 
+
+
 	return (
 		<Layout user={userData}>
 			<SimpleGrid
@@ -79,8 +96,9 @@ const Home = ({ query }) => {
 				justifyContent="center"
 			>
 				{campaigns.data.map((campaign, idx) => (
-					<CampaignCard campaign={campaign} key={idx} />
+					<CampaignCard campaign={campaign} bookmark={campaign.bookmark} fetchCampaigns={fetchCampaigns} user={currentUser} key={idx} />
 				))}
+
 				<Box>
 					<HStack>{processPaginations()}</HStack>
 				</Box>
