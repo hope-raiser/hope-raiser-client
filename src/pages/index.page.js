@@ -9,9 +9,12 @@ import {
 	HStack,
 	Text,
 	Flex,
+	IconButton,
+	Container,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import useAuthStore from "@/modules/authStore";
+import { CopyIcon } from "@chakra-ui/icons";
 
 const Home = ({ query }) => {
 	const [campaigns, setCampaign] = useState([]);
@@ -25,21 +28,24 @@ const Home = ({ query }) => {
 		// Retrieve user data from local storage during initialization
 		const storedUser = localStorage.getItem("user");
 		if (storedUser) {
-		  const parsedUser = JSON.parse(storedUser); // parsing agar keterima sebagai local storage
-		  useAuthStore.setState({ user: parsedUser }); // setting user data ke local storage
+			const parsedUser = JSON.parse(storedUser); // parsing agar keterima sebagai local storage
+			useAuthStore.setState({ user: parsedUser }); // setting user data ke local storage
 		}
 
-		Promise.all([getAllCampaign({ category_id, page })]).then((values) => {
-			setCampaign(...values);
+		const fetchCampaigns = async () => {
+			const data = await getAllCampaign({});
+			setCampaign(data);
 			setLoading(false);
-		});
+		}
+		fetchCampaigns();
 	}, []);
+
 
 	useEffect(() => {
 		// Store user data in local storage whenever it changes
 		localStorage.setItem("user", JSON.stringify(userData));
-	  }, [userData]);
-	
+	}, [userData]);
+
 
 	if (isLoading) {
 		return (
@@ -69,6 +75,8 @@ const Home = ({ query }) => {
 		return pagination;
 	}
 
+
+
 	return (
 		<Layout user={userData}>
 			<SimpleGrid
@@ -81,6 +89,7 @@ const Home = ({ query }) => {
 				{campaigns.data.map((campaign, idx) => (
 					<CampaignCard campaign={campaign} key={idx} />
 				))}
+			
 				<Box>
 					<HStack>{processPaginations()}</HStack>
 				</Box>
