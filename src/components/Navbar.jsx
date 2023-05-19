@@ -56,7 +56,7 @@ const Navbar = () => {
 						Campaigns
 					</Button>
 				</Link>
-				<Link href="/bookmarks">
+				<Link href={`/users/`}>
 					<Button colorScheme="white" variant="link">
 						Saved
 					</Button>

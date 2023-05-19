@@ -84,7 +84,7 @@ function Comment({ id }) {
             Comments
             {comments.data.map((comment, idx) => {
               return (
-                <Box key={idx} boxShadow='md' rounded='md' bg='white' w="400px" h='80px' border='1px' borderColor='gray.200' m="3">
+                <Box alignItems='baseline' key={idx} boxShadow='md' rounded='md' bg='white' w="400px" h='80px' border='1px' borderColor='gray.200' m="3">
                   <HStack>
                     <Box h='80px' w='80px' border='1px' borderColor='gray.200'>
                     </Box>

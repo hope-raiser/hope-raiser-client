@@ -7,7 +7,8 @@ import {
     Container,
     Button,
     Stack,
-    Alert
+    Alert,
+    Box
 } from '@chakra-ui/react'
 import { useState } from "react"
 import { loginUser } from "../../modules/fetch/users"
@@ -34,25 +35,36 @@ function Login() {
     return (
         <div>{
             <Container>
-                <FormControl>
-                    <FormLabel>Email address</FormLabel>
-                    <Input type='email' onChange={(e) => setEmail(e.target.value)} />
-                </FormControl>
-                <FormControl>
-                    <FormLabel>Password</FormLabel>
-                    <Input type='password' onChange={(e) => setPassword(e.target.value)} />
-                </FormControl>
-                <Stack direction='row' spacing={4} align='center'>
-                    <Button
-                        mt={4}
-                        colorScheme='teal'
-                        type='submit'
-                        onClick={handleSubmit}
-                        direction='row' spacing={4} align='center'>
-                        Next
-                    </Button>
-                    <Link href="/register" className="btn btn-link">Register</Link>
-                </Stack>
+                <Box p={4}
+                    borderRadius="md"
+                    boxShadow="dark-lg"
+                    flexDirection="column"
+                    bg="white"
+                    display='flex'
+                    alignItems='baseline'
+                    my="20"
+                >
+                    <FormControl >
+                        <FormLabel>Email address</FormLabel>
+                        <Input type='email' onChange={(e) => setEmail(e.target.value)} />
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>Password</FormLabel>
+                        <Input type='password' onChange={(e) => setPassword(e.target.value)} />
+                    </FormControl>
+                    <Stack direction='row' spacing={4} align='center'>
+                        <Button
+                            mt={4}
+                            colorScheme='teal'
+                            type='submit'
+                            onClick={handleSubmit}
+                            direction='row' spacing={4} align='center'>
+                            Next
+                        </Button>
+                        <Link href="/register" className="btn btn-link">Register</Link>
+                    </Stack>
+
+                </Box>
             </Container>}
             {showAlert && (
                 <Alert status='error'>

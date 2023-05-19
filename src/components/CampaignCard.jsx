@@ -3,6 +3,7 @@ import {
 	CardBody,
 	CardFooter,
 	CardHeader,
+	Divider,
 	Heading,
 	Image,
 	Stack,

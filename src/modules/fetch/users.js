@@ -37,9 +37,19 @@ async function deleteUser(id) {
   }
 }
 
+async function getUserByid(id) {
+  try {
+      const response = await instance.get(`/users/${id}`);
+      return response.data;
+  } catch (error) {
+      throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
 export {
   registerUser,
   loginUser,
   deleteUser,
-  changePassword
+  changePassword,
+  getUserByid
 };
