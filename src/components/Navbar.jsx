@@ -10,21 +10,25 @@ import {
 	DarkMode,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import useAuthStore from "@/modules/authStore";
+import { useRouter } from "next/router";
 
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 const Navbar = () => {
-	const [isLogin, setIsLogin] = useState(false);
+const userData = useAuthStore((state) => state.user);
+const router = useRouter();
+	// const [isLogin, setIsLogin] = useState(false);
 
-	useEffect(() => {
-		const token = window.localStorage.getItem("token");
+	// useEffect(() => {
+	// 	const token = window.localStorage.getItem("token");
 
-		if (token) {
-			setIsLogin(true);
-		} else {
-			setIsLogin(false);
-		}
-	}, [window.localStorage.getItem("token")]);
+	// 	if (token) {
+	// 		setIsLogin(true);
+	// 	} else {
+	// 		setIsLogin(false);
+	// 	}
+	// }, [window.localStorage.getItem("user")]);
 
 	return (
 		<Flex
@@ -64,25 +68,30 @@ const Navbar = () => {
 			</Stack>
 
 			<Spacer />
-			{!isLogin ? (
+			{/* {!isLogin ? ( */}
 				<Link href="/login">
 					<DarkMode>
 						<Button colorScheme="blue"> Login </Button>
 					</DarkMode>
 				</Link>
-			) : (
+			{/* ) : ( */}
 				<DarkMode>
 					<Button
 						colorScheme="blue"
 						onClick={() => {
-							window.localStorage.removeItem("token");
+							window.localStorage.removeItem("user");
 							setIsLogin(false);
 						}}
 					>
 						Logout
 					</Button>
 				</DarkMode>
-			)}
+			{/* )} */}
+			<Link href="/profile">
+					<Button colorScheme="white" variant="link">
+						Profile
+					</Button>
+			</Link>
 		</Flex>
 	);
 };

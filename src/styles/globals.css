@@ -74,6 +74,55 @@ a {
   text-decoration: none;
 }
 
+.delete-button {
+  background-color: red;
+  border-color: red;
+}
+
+.table-row .ant-table-cell:last-child > div {
+  display: flex;
+  gap: 8px;
+}
+
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.profileHeading {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  margin-bottom: 8px;
+  margin-top: -150px; /* Playing to decrease or increase the margin-top */
+}
+
+.profileForm {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 24px;
+}
+
+.profileForm .ant-form-item {
+  width: 100%;
+}
+
+.profileForm .ant-form-item-label {
+  text-align: left;
+}
+
+.profileForm .ant-form-item-control {
+  text-align: left;
+}
+
+.profileForm .ant-btn {
+  width: 100%;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
