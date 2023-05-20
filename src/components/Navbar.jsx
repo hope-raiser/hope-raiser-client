@@ -56,11 +56,13 @@ const Navbar = () => {
 						CATEGORIES
 					</Button>
 				</Link>
+				{isLogin && (
 				<Link href="/users/bookmark">
 					<Button colorScheme="white" variant="link">
 						SAVED
 					</Button>
 				</Link>
+				)}
 			</Stack>
 
 			<Spacer />
