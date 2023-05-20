@@ -82,6 +82,12 @@ const Navbar = () => {
                         <ul className="py-2 px-8 ">
                           <li
                             className="cursor-pointer mb-4 py-1  text-Dark hover:text-Teal duration-300"
+                            onClick={() => router.push("/campaigns/create")}
+                          >
+                            Create Campaign
+                          </li>
+                          <li
+                            className="cursor-pointer mb-4 py-1  text-Dark hover:text-Teal duration-300"
                             onClick={() => router.push("/profile")}
                           >
                             Profile
