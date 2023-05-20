@@ -15,10 +15,10 @@ export default function TabDonation({ campaign }) {
   return (
     <>
       {/* SECTION DONATIONS */}
-      <h1 className="font-bold text-slate-800 text-4xl mb-2 text-center pt-4">Donations</h1>
+      <h1 className="font-bold text-Dark text-4xl mb-2 text-center pt-4">Donations</h1>
       <div className="flex flex-wrap">
         <div className="w-full pt-8 ">
-          <h4 className="font-semibold text-2xl px-2 text-slate-800">Supporters</h4>
+          <h4 className="font-semibold text-2xl px-2 text-Dark">Supporters</h4>
           <div className="pt-8 px-4">
             <div className="flex flex-col">
               <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">

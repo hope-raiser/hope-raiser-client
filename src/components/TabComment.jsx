@@ -31,10 +31,10 @@ export default function TabComment({ campaign, fetchCampaign }) {
 
   return (
     <>
-      <h1 className="font-bold text-slate-800 text-4xl mb-2 text-center pt-4">Comments</h1>
+      <h1 className="font-bold text-Dark text-4xl mb-2 text-center pt-4">Comments</h1>
       <div className="flex flex-wrap">
         <div className="w-full pt-8">
-          <h4 className="font-normal text-xl px-2 text-slate-800">
+          <h4 className="font-normal text-xl px-2 text-Dark">
             <span className="font-bold ">{campaign.comment.length}</span> Comments
           </h4>
           <form className="pt-8">
@@ -45,7 +45,7 @@ export default function TabComment({ campaign, fetchCampaign }) {
             />
             <div className="w-full flex justify-end px-2">
               <button
-                className="bg-teal-500 px-4 py-1 rounded-full text-white hover:text-slate-200 hover:bg-teal-600 duration-300"
+                className="bg-Teal px-4 py-1 rounded-full text-white hover:text-slate-200 hover:bg-Teal duration-300"
                 onClick={handleCreateComment}
               >
                 Send
