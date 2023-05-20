@@ -16,8 +16,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
-//   const userData = useAuthStore((state) => state.user);
-//   const router = useRouter();
+  //   const userData = useAuthStore((state) => state.user);
+  //   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
@@ -65,9 +65,14 @@ const Navbar = () => {
             Saved
           </Button>
         </Link>
-      </Stack>
+      </Stack >
 
       <Spacer />
+      {isLogin && (
+        <Link href="/campaigns/create">
+          <Button mr="2" colorScheme="teal.500">Create New Book</Button>
+        </Link>
+      )}
       {!isLogin ? (
         <Link href="/login">
           <DarkMode>
