@@ -3,14 +3,14 @@ import Link from "next/link";
 
 function Footer() {
   return (
-    <footer className="bg-slate-800 pt-4 sticky bottom-0 w-full">
+    <footer className="bg-Dark pt-4 sticky bottom-0 w-full">
       <div className="container mx-auto">
         <div className="flex flex-wrap gap-12 px-12 py-16   lg:justify-between items-center">
           <div className="w-full lg:w-1/3 ">
             <div className="flex px-2 items-center">
               <Img src="" alt="LOGO" className="text-slate-300" />
               <div className="flex flex-wrap flex-col px-4 text-center">
-                <h2 className="text-teal-500 text-2xl font-bold tracking-wider">HOPERAISER</h2>
+                <h2 className="text-Teal text-2xl font-bold tracking-wider">HOPERAISER</h2>
                 <span className="text-slate-200 text-xs mt-1 tracking-widest ">YOUR TAGLINE</span>
               </div>
             </div>
@@ -21,27 +21,27 @@ function Footer() {
             </div>
           </div>
           <div className="w-full lg:w-1/3 ">
-            <h3 className="text-teal-500 text-xl  font-normal tracking-wider mb-4">NAVIGATION</h3>
+            <h3 className="text-Teal text-xl  font-normal tracking-wider mb-4">NAVIGATION</h3>
             <div className="mx-auto ">
               <ul className="text-slate-300 text-md ">
                 <li className="flex flex-wrap flex-col gap-2 lg:gap-4">
                   <a>
-                    <Link href="/" className="hover:text-teal-500 duration-300">
+                    <Link href="/" className="hover:text-Teal duration-300">
                       Homepage
                     </Link>
                   </a>
                   <a>
-                    <Link href="/campaigns" className="hover:text-teal-500 duration-300">
+                    <Link href="/campaigns" className="hover:text-Teal duration-300">
                       Campaigns
                     </Link>
                   </a>
                   <a>
-                    <Link href="/categories" className="hover:text-teal-500 duration-300">
+                    <Link href="/categories" className="hover:text-Teal duration-300">
                       Categories
                     </Link>
                   </a>
                   <a>
-                    <Link href="/bookmarks" className="hover:text-teal-500 duration-300">
+                    <Link href="/users/bookmark" className="hover:text-Teal duration-300">
                       Saved
                     </Link>
                   </a>
@@ -50,7 +50,7 @@ function Footer() {
             </div>
           </div>
           <div className="w-full lg:w-auto ">
-            <h2 className="text-teal-500 text-xl md:px-4 font-normal tracking-wide">FOLLOW US</h2>
+            <h2 className="text-Teal text-xl md:px-4 font-normal tracking-wide">FOLLOW US</h2>
             <div className="flex flex-col md:flex-row  gap-4 md:gap-12 pt-8 md:pt-4  ">
               <div className="flex flex-wrap flex-col gap-4 ">
                 {/* INSTAGRAM ICON */}
@@ -58,7 +58,7 @@ function Footer() {
                   <Link
                     href="https://www.instagram.com/?hl=id"
                     target="_blank"
-                    className="rounded-full w-9 h-9 flex justify-center items-center border-2 border-slate-300 text-slate-300 hover:border-teal-500 hover:bg-slate-300 hover:text-slate-800"
+                    className="rounded-full w-9 h-9 flex justify-center items-center border-2 border-slate-300 text-slate-300 hover:border-Teal hover:bg-slate-300 hover:text-Dark"
                   >
                     <svg role="img" width="16" className="fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <title>Instagram</title>
@@ -72,7 +72,7 @@ function Footer() {
                   <Link
                     href="https://id-id.facebook.com/"
                     target="_blank"
-                    className="rounded-full w-9 h-9 flex justify-center items-center border-2 border-slate-300 text-slate-300 hover:border-teal-500 hover:bg-slate-300 hover:text-slate-800"
+                    className="rounded-full w-9 h-9 flex justify-center items-center border-2 border-slate-300 text-slate-300 hover:border-Teal hover:bg-slate-300 hover:text-Dark"
                   >
                     <svg role="img" width="16" className="fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <title>Facebook</title>
@@ -86,7 +86,7 @@ function Footer() {
                   <Link
                     href="https://twitter.com/?lang=id"
                     target="_blank"
-                    className="rounded-full w-9 h-9 flex justify-center items-center border-2 border-slate-300 text-slate-300 hover:border-teal-500 hover:bg-slate-300 hover:text-slate-800"
+                    className="rounded-full w-9 h-9 flex justify-center items-center border-2 border-slate-300 text-slate-300 hover:border-Teal hover:bg-slate-300 hover:text-Dark"
                   >
                     <svg role="img" width="16" className="fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <title>Twitter</title>
@@ -102,7 +102,7 @@ function Footer() {
                   <Link
                     href="https://www.youtube.com/"
                     target="_blank"
-                    className="rounded-full w-9 h-9 flex justify-center items-center border-2 border-slate-300 text-slate-300 hover:border-teal-500 hover:bg-slate-300 hover:text-slate-800"
+                    className="rounded-full w-9 h-9 flex justify-center items-center border-2 border-slate-300 text-slate-300 hover:border-Teal hover:bg-slate-300 hover:text-Dark"
                   >
                     <svg role="img" width="16" className="fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <title>YouTube</title>
@@ -116,7 +116,7 @@ function Footer() {
                   <Link
                     href="https://www.tiktok.com/"
                     target="_blank"
-                    className="rounded-full w-9 h-9 flex justify-center items-center border-2 border-slate-300 text-slate-300 hover:border-teal-500 hover:bg-slate-300 hover:text-slate-800"
+                    className="rounded-full w-9 h-9 flex justify-center items-center border-2 border-slate-300 text-slate-300 hover:border-Teal hover:bg-slate-300 hover:text-Dark"
                   >
                     <svg role="img" width="16" className="fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <title>TikTok</title>

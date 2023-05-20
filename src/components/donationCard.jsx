@@ -24,8 +24,12 @@ function DonationCard({ id, setCampaign, setShowDonate }) {
     });
 
     if (result.isConfirmed) {
-      await createNewDonation({ amount, campaignId: id });
-      await Swal.fire("Donation Success", "Thanks for your support.", "success");
+      if (amount >= 1000 && amount) {
+        await createNewDonation({ amount, campaignId: id });
+        await Swal.fire("Donation Success", "Thanks for your support.", "success");
+      } else {
+        await Swal.fire("Oops...", "Minimum 1000 Rupiah to Donate this Campaign.", "error");
+      }
 
       const refetchCampaign = await getCampaignDetail(id);
       setCampaign(refetchCampaign);
