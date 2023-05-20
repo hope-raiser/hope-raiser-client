@@ -2,7 +2,7 @@ import {
   createNewBookmark,
   deleteBookmarkById,
 } from "@/modules/fetch/bookmarks";
-import { CopyIcon, AddIcon} from "@chakra-ui/icons";
+import { AddIcon } from "@chakra-ui/icons";
 import {
   Card,
   CardBody,
@@ -17,10 +17,16 @@ import {
   Spacer,
   VStack,
   StackDivider,
+  AspectRatio,
+  HStack,
+  Box,
+  Flex,
 } from "@chakra-ui/react";
+import { Divider } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import FormatCurrency from "@/components/FormatCurrency";
 
 function CampaignCard(props) {
   const { campaign, bookmark, user, fetchCampaigns } = props;
@@ -72,23 +78,21 @@ function CampaignCard(props) {
 
   return (
     <>
-      <Card
-        variant="elevated"
-        minHeight="sm"
-        minWidth="sm"
-        maxHeight="lg"
-        maxWidth="lg"
-      >
+      <Card variant="elevated" minHeight="sm" minWidth="sm" maxWidth="lg">
         <Link href={`/campaigns/${campaign.id}`}>
           <CardHeader>
             {campaign.banner.map((bann, index) => {
-              return <Image key={index} src={bann.image} />;
+              return (
+                <AspectRatio ratio={16 / 9}>
+                  <Image key={index} src={bann.image} />
+                </AspectRatio>
+              );
             })}
           </CardHeader>
           <CardBody>
-            <Stack my="6" spacing="3">
+            <Stack my="1" spacing="2">
               <Heading size="lg">{campaign.title}</Heading>
-              <Text>{campaign.description}</Text>
+              <Text noOfLines={4}>{campaign.description}</Text>
             </Stack>
           </CardBody>
         </Link>
@@ -97,16 +101,21 @@ function CampaignCard(props) {
           justifyContent="space-between"
           alignItems="center"
         >
-          <VStack
-            divider={<StackDivider borderColor="gray.200" />}
-            spacing={4}
-            align="stretch"
-          >
-            <Text color="blue.600" fontSize="md" align="start">
-              Current Donation ={campaign.currentDonation}
-            </Text>
-          </VStack>
-          <IconBookmark />
+          <Box>
+            <VStack
+              divider={<StackDivider borderColor="gray.200" />}
+              spacing={4}
+              align="stretch"
+            > 
+              <Text color="blue.600" fontSize="md" align="start">Current Donation<br></br> 
+                <FormatCurrency amount= {campaign.currentDonation} />
+              </Text>
+            </VStack>
+          </Box>
+          <Spacer />
+          <Box>
+            <IconBookmark />
+          </Box>
         </CardFooter>
       </Card>
     </>

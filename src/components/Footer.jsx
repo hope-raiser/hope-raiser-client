@@ -31,11 +31,6 @@ function Footer() {
                     </Link>
                   </a>
                   <a>
-                    <Link href="/campaigns" className="hover:text-Teal duration-300">
-                      Campaigns
-                    </Link>
-                  </a>
-                  <a>
                     <Link href="/categories" className="hover:text-Teal duration-300">
                       Categories
                     </Link>
