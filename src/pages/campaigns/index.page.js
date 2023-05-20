@@ -5,34 +5,38 @@ import { useRouter } from "next/router";
 import { Heading, Button, Flex, CircularProgress } from "@chakra-ui/react";
 
 function Campaign() {
-	const [campaigns, setCampaign] = useState([]);
-	const [isLoading, setLoading] = useState(true);
-	const router = useRouter();
+  const [campaigns, setCampaign] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
 
-	useEffect(() => {
-		Promise.all([getAllCampaign()]).then((values) => {
-			setCampaign(...values);
-			setLoading(false);
-		});
-	}, []);
+  const router = useRouter();
 
-	if (isLoading) {
-		return (
-			<>
-				<Flex height="full" width="full" align="center">
-					<CircularProgress isIndeterminate color="green.300" />
-				</Flex>
-			</>
-		);
-	}
+  useEffect(() => {
+    Promise.all([getAllCampaign(page)]).then((values) => {
+      setCampaign(...values);
+      setLoading(false);
+    });
+  }, []);
 
-	return (
-		<>
-			<Layout>
-				<Heading>INI HALAMAN CAMPAIGN</Heading>
-			</Layout>
-		</>
-	);
+  if (isLoading) {
+    return (
+      <>
+        <Flex height="full" width="full" align="center">
+          <CircularProgress isIndeterminate color="green.300" />
+        </Flex>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Layout>
+        <Flex className="min-h-screen">
+          <Heading>INI HALAMAN CAMPAIGN</Heading>
+        </Flex>
+      </Layout>
+    </>
+  );
 }
 
 export default Campaign;
