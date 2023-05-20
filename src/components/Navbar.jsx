@@ -70,7 +70,7 @@ const Navbar = () => {
       <Spacer />
       {isLogin && (
         <Link href="/campaigns/create">
-          <Button mr="2" colorScheme="teal.500">Create New Book</Button>
+          <Button mr="2" colorScheme="teal.500">Create Campaign</Button>
         </Link>
       )}
       {!isLogin ? (
