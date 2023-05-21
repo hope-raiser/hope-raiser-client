@@ -1,4 +1,4 @@
-import { CircularProgress, Img, Tab } from "@chakra-ui/react";
+import { CircularProgress, Image, Tab } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getCampaignDetail } from "@/modules/fetch/campaigns";
 import { deleteCampaignById } from "@/modules/fetch/campaigns";
@@ -99,6 +99,24 @@ export default function CampaignDetails({ id }) {
       </>
     );
   }
+  function ShowButton() {
+    return (
+      <>
+        <button
+          className="bg-Teal text-slate-100 font-semibold text-lg px-4 py-2 rounded-ee-xl me-2 hover:text-Teal hover:bg-slate-100 hover:shadow-sm duration-300 focus:border-b-2 focus:border-Teal border-b-2 border-Teal"
+          onClick={() => setTabContent(1)}
+        >
+          Comments
+        </button>
+        <button
+          className="bg-Teal text-slate-100 font-semibold text-lg px-4 py-2 rounded-ee-xl mb-8 hover:text-Teal hover:bg-slate-100 hover:shadow-sm duration-300 focus:border-b-2 focus:border-Teal border-b-2 border-Teal"
+          onClick={() => setTabContent(2)}
+        >
+          Donations
+        </button>
+      </>
+    );
+  }
 
   return (
     <Layout>
@@ -115,7 +133,14 @@ export default function CampaignDetails({ id }) {
                   {campaign.banner.map((banner, idx) => {
                     return (
                       <>
-                        <Img src={`${banner.image}`} alt="BANNER IMAGE" width="full" h="full" className="object-contain" />
+                        <Image
+                          src={`${banner.image}`}
+                          fallback="https://placehold.co/1280x720"
+                          alt="BANNER IMAGE"
+                          width="full"
+                          h="full"
+                          className="object-cover"
+                        />
                       </>
                     );
                   })}
@@ -176,7 +201,10 @@ export default function CampaignDetails({ id }) {
                             p={2}
                             borderRadius={"lg"}
                             cursor={"pointer"}
-                            _hover={{ color: "gray.100", backgroundColor: "teal.500" }}
+                            _hover={{
+                              color: "gray.100",
+                              backgroundColor: "teal.500"
+                            }}
                             transitionDuration={"400ms"}
                             onClick={() => router.push(`./${campaign.id}/edit`)}
                             border={"1px"}
@@ -189,7 +217,10 @@ export default function CampaignDetails({ id }) {
                             p={2}
                             borderRadius={"lg"}
                             cursor={"pointer"}
-                            _hover={{ color: "teal.500", backgroundColor: "gray.100" }}
+                            _hover={{
+                              color: "teal.500",
+                              backgroundColor: "gray.100"
+                            }}
                             transitionDuration={"400ms"}
                             border={"1px"}
                             borderColor={"gray.400"}
@@ -207,7 +238,7 @@ export default function CampaignDetails({ id }) {
 
         {/* SECTION COMMENTS & DONATIONS */}
         <section className="py-24 px-4 ">
-          <div className="container max-w-screen-md 2xl:max-w-screen-lg  mx-auto border-t border-slate-200">
+          <div className="container max-w-screen-md px-12 md:px-0 2xl:max-w-screen-lg  mx-auto border-t border-slate-200">
             <ShowButton />
             {tabContent === 1 ? <TabComment campaign={campaign} fetchCampaign={fetchCampaign} /> : <TabDonation campaign={campaign} />}
           </div>

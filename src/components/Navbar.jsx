@@ -1,15 +1,14 @@
 import useAuthStore from "@/modules/authStore";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Img } from "@chakra-ui/react";
+import { Image, Img } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
+  //   const userData = useAuthStore((state) => state.user);
+  //   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
-  const userData = useAuthStore((state) => state.user);
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
@@ -31,7 +30,7 @@ const Navbar = () => {
         <div className="py-5">
           <div className="flex items-center  justify-around">
             <div className="flex items-center ">
-              <Img src="" alt="LOGO" className="text-Dark font-semibold" />
+              <Image boxSize="40px" src="" alt="LOGO" className="text-Dark font-semibold" />
               <div className="flex flex-wrap flex-col px-4 text-center">
                 <h2 className="text-Teal text-2xl font-bold tracking-wider">HOPERAISER</h2>
                 <span className="text-Dark text-xs  tracking-widest ">YOUR TAGLINE</span>

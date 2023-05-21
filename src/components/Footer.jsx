@@ -1,4 +1,4 @@
-import { Img, Text } from "@chakra-ui/react";
+import { Image, Text } from "@chakra-ui/react";
 import Link from "next/link";
 
 function Footer() {
@@ -8,15 +8,15 @@ function Footer() {
         <div className="flex flex-wrap gap-12 px-12 py-16   lg:justify-between items-center">
           <div className="w-full lg:w-1/3 ">
             <div className="flex px-2 items-center">
-              <Img src="" alt="LOGO" className="text-slate-300" />
+              <Image src="https://placehold.co/75" fallback="https://placehold.co/75" alt="LOGO" className="text-slate-300" />
               <div className="flex flex-wrap flex-col px-4 text-center">
                 <h2 className="text-Teal text-2xl font-bold tracking-wider">HOPERAISER</h2>
-                <span className="text-slate-200 text-xs mt-1 tracking-widest ">YOUR TAGLINE</span>
+                <span className="text-slate-200 text-xs mt-1 tracking-widest ">"Empowering Hope, Fueling Progress"</span>
               </div>
             </div>
             <div className="pt-4 md:pt-8 md:w-2/3">
               <p className="text-slate-300 text-sm font-light">
-                Fundly is dedicated to providing you with the tools you need to raise money for whatever your cause may be.
+                HopeRaiser is dedicated to keeping your hope alive by raising money for whatever your cause may be.
               </p>
             </div>
           </div>
@@ -28,11 +28,6 @@ function Footer() {
                   <a>
                     <Link href="/" className="hover:text-Teal duration-300">
                       Homepage
-                    </Link>
-                  </a>
-                  <a>
-                    <Link href="/campaigns" className="hover:text-Teal duration-300">
-                      Campaigns
                     </Link>
                   </a>
                   <a>
