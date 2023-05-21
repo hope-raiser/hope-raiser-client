@@ -84,7 +84,15 @@ function UpdateCampaign({ id }) {
             </FormControl>
             <FormControl>
               <FormLabel>Description</FormLabel>
-              <Input name="description" defaultValue={campaign.description} onChange={(e) => setDescription(e.target.value)} />
+              <Input
+                as="textarea"
+                pt="1"
+                name="description"
+                h={20}
+                defaultValue={campaign.description}
+                onChange={(e) => setDescription(e.target.value)}
+                resize={"none"}
+              />
             </FormControl>
             <FormControl>
               <FormLabel>Target Donation (Rp)</FormLabel>
