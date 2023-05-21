@@ -7,16 +7,17 @@ import { useEffect, useState } from "react";
 
 const Navbar = () => {
   //   const userData = useAuthStore((state) => state.user);
-  //   const router = useRouter();
+  const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const token = window.localStorage.getItem("token");
+    if (typeof window !== "undefined") {
+      const token = window.localStorage.getItem("token");
 
-    if (token) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
+      if (token) {
+        setIsLogin(true);
+      }
     }
   }, [window.localStorage.getItem("token")]);
 
@@ -30,33 +31,22 @@ const Navbar = () => {
         <div className="py-5">
           <div className="flex items-center  justify-around">
             <div className="flex items-center ">
-              <Image boxSize="40px" src="" alt="LOGO" className="text-Dark font-semibold" />
+              <Image src="https://placehold.co/60" fallback="https://placehold.co/75" alt="LOGO" className="text-Dark font-semibold" />
               <div className="flex flex-wrap flex-col px-4 text-center">
                 <h2 className="text-Teal text-2xl font-bold tracking-wider">HOPERAISER</h2>
-                <span className="text-Dark text-xs  tracking-widest ">YOUR TAGLINE</span>
+                <span className="text-Dark text-xs  tracking-widest ">Empowering Hope, Fueling Progress</span>
               </div>
             </div>
             <div className="text-Dark text-lg font-medium flex gap-10">
-              <a>
-                <Link href="/" className="hover:text-Teal duration-300">
-                  Home
-                </Link>
-              </a>
-              <a>
-                <Link href="/campaigns" className="hover:text-Teal duration-300">
-                  Campaigns
-                </Link>
-              </a>
-              <a>
-                <Link href="/categories" className="hover:text-Teal duration-300">
-                  Categories
-                </Link>
-              </a>
-              <a>
-                <Link href="/users/bookmark" className="hover:text-Teal duration-300">
-                  Saved
-                </Link>
-              </a>
+              <Link href="/" className="hover:text-Teal duration-300">
+                Homepage
+              </Link>
+              <Link href="/categories" className="hover:text-Teal duration-300">
+                Categories
+              </Link>
+              <Link href={isLogin ? "/users/bookmark" : "/login"} className="hover:text-Teal duration-300">
+                Saved
+              </Link>
             </div>
             <div>
               {!isLogin ? (

@@ -1,7 +1,20 @@
 import { Image, Text } from "@chakra-ui/react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 function Footer() {
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = window.localStorage.getItem("token");
+
+      if (token) {
+        setIsLogin(true);
+      }
+    }
+  }, [window.localStorage.getItem("token")]);
+
   return (
     <footer className="bg-Dark pt-4 sticky bottom-0 w-full">
       <div className="container mx-auto">
@@ -24,22 +37,16 @@ function Footer() {
             <h3 className="text-Teal text-xl  font-normal tracking-wider mb-4">NAVIGATION</h3>
             <div className="mx-auto ">
               <ul className="text-slate-300 text-md ">
-                <li className="flex flex-wrap flex-col gap-2 lg:gap-4">
-                  <a>
-                    <Link href="/" className="hover:text-Teal duration-300">
-                      Homepage
-                    </Link>
-                  </a>
-                  <a>
-                    <Link href="/categories" className="hover:text-Teal duration-300">
-                      Categories
-                    </Link>
-                  </a>
-                  <a>
-                    <Link href="/users/bookmark" className="hover:text-Teal duration-300">
-                      Saved
-                    </Link>
-                  </a>
+                <li className="flex flex-wrap flex-col gap-2 lg:gap-4 w-full">
+                  <Link href="/" className="hover:text-Teal duration-300">
+                    Homepage
+                  </Link>
+                  <Link href="/categories" className="hover:text-Teal duration-300">
+                    Categories
+                  </Link>
+                  <Link href={isLogin ? "/users/bookmark" : "/login"} className="hover:text-Teal duration-300">
+                    Saved
+                  </Link>
                 </li>
               </ul>
             </div>
