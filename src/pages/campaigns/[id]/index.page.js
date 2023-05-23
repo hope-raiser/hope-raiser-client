@@ -12,17 +12,20 @@ import TabComment from "@/components/TabComment";
 import Swal from "sweetalert2";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import EditCampaign from "@/components/editCampaign";
+import Donation from "./donations/index.page";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function CampaignDetails({ id }) {
   const [campaign, setCampaign] = useState({});
   const [isLoading, setLoading] = useState(true);
-  const [showDonate, setShowDonate] = useState(false);
-  const [showUpdateDelete, setShowUpdateDelete] = useState(false);
-  const [donate, setDonate] = useState(false);
+  const [buttonDonate, setButtonDonate] = useState(true);
+  const [updateDelete, setUpdateDelete] = useState(false);
   const [tabContent, setTabContent] = useState(1);
   const [statusCampaign, setStatusCampaign] = useState(true);
 
   const [openModal, setOpenModal] = useState(false);
+  const [openModalDonate, setOpenModalDonate] = useState(false);
 
   const router = useRouter();
   let accessToken = "";
@@ -38,12 +41,15 @@ export default function CampaignDetails({ id }) {
 
   useEffect(() => {
     if (dataUser.id === campaign.userId) {
-      setShowUpdateDelete(true);
-      setDonate(true);
-    } else {
-      setShowUpdateDelete(false);
+      setUpdateDelete(true);
+      setButtonDonate(false);
     }
   }, [dataUser, campaign]);
+
+  // using AOS
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   const fetchCampaign = async () => {
     const data = await getCampaignDetail(id);
@@ -115,9 +121,9 @@ export default function CampaignDetails({ id }) {
 
   function ShowButton() {
     return (
-      <>
+      <div>
         <button
-          className="bg-Teal text-slate-100 font-semibold text-lg px-4 py-2 rounded-ee-xl me-2 hover:text-Teal hover:bg-slate-100 hover:shadow-sm duration-300 focus:border-b-2 focus:border-Teal border-b-2 border-Teal"
+          className="bg-Teal text-slate-100 font-semibold text-lg px-4 py-2 mb-2 rounded-ee-xl me-2 hover:text-Teal hover:bg-slate-100 hover:shadow-sm duration-300 focus:border-b-2 focus:border-Teal border-b-2 border-Teal"
           onClick={() => setTabContent(1)}
         >
           Comments
@@ -128,20 +134,20 @@ export default function CampaignDetails({ id }) {
         >
           Donations
         </button>
-      </>
+      </div>
     );
   }
 
   return (
     <Layout>
-      <div className="bg-slate-50 min-h-screen ">
+      <div className=" min-h-screen ">
         {/* SECTION CAMPAIGN */}
-        <section className="py-12 px-4 md:px-16 ">
+        <section className="py-12 px-4 md:px-16 max-w-[1560px]  mx-auto">
           <div className="container mx-auto ">
             <div className="mx-auto text-center">
-              <h1 className="font-bold text-Dark text-3xl md:text-4xl mb-2">SUPPORT & DONATE!</h1>
+              <h1 className="font-bold text-Dark text-2xl md:text-4xl mb-2">SUPPORT & DONATE!</h1>
             </div>
-            <div className="mt-12 flex flex-wrap">
+            <div className="mt-12 flex flex-wrap ">
               <div className="w-full px-4 lg:px-0 lg:w-3/5">
                 <Carousel image={campaign.banner.map((banner) => banner.image)} />
                 <div className="flex gap-4 mx-4">
@@ -156,7 +162,7 @@ export default function CampaignDetails({ id }) {
                   })}
                 </div>
               </div>
-              <div className="w-full lg:w-2/5 px-12 pt-8 lg:pt-0  ">
+              <div className="w-full lg:w-2/5 px-12 pt-8 lg:pt-0">
                 {statusCampaign && (
                   <>
                     <div className="text-Dark ">
@@ -175,30 +181,24 @@ export default function CampaignDetails({ id }) {
                           <h4 className="font-normal text-base">Donatur</h4>
                         </div>
                         <div className=" text-center ">
-                          <p className="font-semibold text-2xl">
-                            {/* <DaysLeft inputDate={campaign.endDate} /> */} {daysLeft(campaign.endDate)}{" "}
-                          </p>
+                          <p className="font-semibold text-2xl">{daysLeft(campaign.endDate)} </p>
                           <h4 className="font-normal text-base">Days ago</h4>
                         </div>
                       </div>
                       <div className="pt-8">
-                        {!donate && (
+                        {buttonDonate && (
                           <>
-                            {!showDonate ? (
-                              <>
-                                <button
-                                  onClick={() => setShowDonate(true)}
-                                  className="bg-Teal md:w-full rounded-sm px-3 py-2 md:px-4 md:py-2 font-bold text-slate-100  text-sm md:text-xl hover:bg-slate-100 hover:text-Teal hover:ring-1 hover:ring-Teal duration-500"
-                                >
-                                  DONATE NOW
-                                </button>
-                              </>
-                            ) : (
-                              <DonationCard id={id} setCampaign={setCampaign} setShowDonate={setShowDonate} />
-                            )}
+                            <button
+                              onClick={() => {
+                                setOpenModalDonate(true);
+                              }}
+                              className="bg-Teal md:w-full rounded-sm px-3 py-2 md:px-4 md:py-2 font-bold text-slate-100  text-sm md:text-xl hover:bg-slate-100 hover:text-Teal hover:ring-1 hover:ring-Teal duration-500"
+                            >
+                              DONATE NOW
+                            </button>
                           </>
                         )}
-                        {accessToken && showUpdateDelete && (
+                        {accessToken && updateDelete && (
                           <>
                             <div className="pt-8 flex gap-4 mx-4 text-slate-100 font-semibold">
                               <EditIcon
@@ -245,7 +245,7 @@ export default function CampaignDetails({ id }) {
                     <div className="text-rose-500">
                       <h3 className="font-bold  text-xl pt-4 md:text-2xl">* This Campaign has Ended.</h3>
                     </div>
-                    {accessToken && showUpdateDelete && (
+                    {accessToken && updateDelete && (
                       <>
                         <div className="pt-8 flex gap-4 mx-4 text-slate-100 font-semibold">
                           <EditIcon
@@ -286,14 +286,15 @@ export default function CampaignDetails({ id }) {
                   </>
                 )}
               </div>
-
-              <div className="px-8 pt-12  w-full md:w-4/5 ">
-                <h3 className="font-bold pb-4 text-2xl md:text-3xl ">{campaign.title}</h3>
-                <h5>{campaign.description}</h5>
-              </div>
+            </div>
+            <div className="px-4 md:px-8 mt-16  w-full  lg:w-4/6">
+              <h3 className="font-bold pb-4 text-2xl md:text-3xl text-center lg:text-left">{campaign.title}</h3>
+              <h5>{campaign.description}</h5>
             </div>
           </div>
         </section>
+
+        {openModalDonate && <DonationCard id={id} setOpenModalDonate={setOpenModalDonate} setCampaign={setCampaign} campaign={campaign} />}
 
         {openModal && <EditCampaign id={id} setCampaign={setCampaign} setOpenModal={setOpenModal} />}
 
