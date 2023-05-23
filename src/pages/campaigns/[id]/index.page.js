@@ -11,6 +11,7 @@ import Carousel from "@/components/Carousel";
 import TabComment from "@/components/TabComment";
 import Swal from "sweetalert2";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import EditCampaign from "@/components/editCampaign";
 
 export default function CampaignDetails({ id }) {
   const [campaign, setCampaign] = useState({});
@@ -19,7 +20,10 @@ export default function CampaignDetails({ id }) {
   const [showUpdateDelete, setShowUpdateDelete] = useState(false);
   const [donate, setDonate] = useState(false);
   const [tabContent, setTabContent] = useState(1);
-  // const [daysLeft, setDaysLeft] = useState(0);
+  const [statusCampaign, setStatusCampaign] = useState(true);
+
+  const [openModal, setOpenModal] = useState(false);
+
   const router = useRouter();
   let accessToken = "";
   let dataUser = "";
@@ -53,7 +57,7 @@ export default function CampaignDetails({ id }) {
   }, []);
 
   // FORMAT DATE
-  function DaysLeft({ inputDate }) {
+  function daysLeft(inputDate) {
     const date = new Date(inputDate);
     const formattedDate = date.toLocaleDateString("id-ID", {
       day: "2-digit",
@@ -62,7 +66,6 @@ export default function CampaignDetails({ id }) {
     });
 
     // Mengubah bentuk date ('dd/mm/yyyy') => ('dd-mm-yyyy')
-
     const changeFormatDate = formattedDate.split("/").reverse().join("-");
 
     const targetDate = new Date(changeFormatDate);
@@ -72,6 +75,12 @@ export default function CampaignDetails({ id }) {
 
     return daysLeft;
   }
+
+  useEffect(() => {
+    if (daysLeft(campaign.endDate) <= 0 || campaign.currentDonation >= campaign.goal) {
+      setStatusCampaign(false);
+    }
+  }, [campaign]);
 
   const handleDeleteCampaign = async () => {
     const result = await Swal.fire({
@@ -85,6 +94,13 @@ export default function CampaignDetails({ id }) {
     });
     if (result.isConfirmed) {
       await deleteCampaignById(id);
+      await Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Delete Campaign Successfully.",
+        showConfirmButton: false,
+        timer: 2000
+      });
       await router.push("/");
     }
   };
@@ -141,45 +157,94 @@ export default function CampaignDetails({ id }) {
                 </div>
               </div>
               <div className="w-full lg:w-2/5 px-12 pt-8 lg:pt-0  ">
-                <div className="text-Dark ">
-                  <h3 className="font-bold text-Teal text-2xl pt-4 md:text-4xl">
-                    <FormatCurrency amount={campaign.currentDonation} />
-                  </h3>
-                  <p className="font-normal text-sm pt-2">
-                    Target Donation{" "}
-                    <span className="font-semibold text-base">
-                      <FormatCurrency amount={campaign.goal} />
-                    </span>
-                  </p>
-                  <div className="flex flex-wrap pt-6 gap-12 ">
-                    <div className="text-center ">
-                      <p className="font-semibold text-2xl ">{campaign.donations.length}</p>
-                      <h4 className="font-normal text-base">Donatur</h4>
-                    </div>
-                    <div className=" text-center ">
-                      <p className="font-semibold text-2xl">
-                        <DaysLeft inputDate={campaign.endDate} />
+                {statusCampaign && (
+                  <>
+                    <div className="text-Dark ">
+                      <h3 className="font-bold text-Teal text-2xl pt-4 md:text-4xl">
+                        <FormatCurrency amount={campaign.currentDonation} />
+                      </h3>
+                      <p className="font-normal text-sm pt-2">
+                        Target Donation{" "}
+                        <span className="font-semibold text-base">
+                          <FormatCurrency amount={campaign.goal} />
+                        </span>
                       </p>
-                      <h4 className="font-normal text-base">Days a go</h4>
-                    </div>
-                  </div>
-                  <div className="pt-8">
-                    {!donate && (
-                      <>
-                        {!showDonate ? (
+                      <div className="flex flex-wrap pt-6 gap-12 ">
+                        <div className="text-center ">
+                          <p className="font-semibold text-2xl ">{campaign.donations.length}</p>
+                          <h4 className="font-normal text-base">Donatur</h4>
+                        </div>
+                        <div className=" text-center ">
+                          <p className="font-semibold text-2xl">
+                            {/* <DaysLeft inputDate={campaign.endDate} /> */} {daysLeft(campaign.endDate)}{" "}
+                          </p>
+                          <h4 className="font-normal text-base">Days ago</h4>
+                        </div>
+                      </div>
+                      <div className="pt-8">
+                        {!donate && (
                           <>
-                            <button
-                              onClick={() => setShowDonate(true)}
-                              className="bg-Teal md:w-full rounded-sm px-3 py-2 md:px-4 md:py-2 font-bold text-slate-100  text-sm md:text-xl hover:bg-slate-100 hover:text-Teal hover:ring-1 hover:ring-Teal duration-500"
-                            >
-                              DONATE NOW
-                            </button>
+                            {!showDonate ? (
+                              <>
+                                <button
+                                  onClick={() => setShowDonate(true)}
+                                  className="bg-Teal md:w-full rounded-sm px-3 py-2 md:px-4 md:py-2 font-bold text-slate-100  text-sm md:text-xl hover:bg-slate-100 hover:text-Teal hover:ring-1 hover:ring-Teal duration-500"
+                                >
+                                  DONATE NOW
+                                </button>
+                              </>
+                            ) : (
+                              <DonationCard id={id} setCampaign={setCampaign} setShowDonate={setShowDonate} />
+                            )}
                           </>
-                        ) : (
-                          <DonationCard id={id} setCampaign={setCampaign} setShowDonate={setShowDonate} />
                         )}
-                      </>
-                    )}
+                        {accessToken && showUpdateDelete && (
+                          <>
+                            <div className="pt-8 flex gap-4 mx-4 text-slate-100 font-semibold">
+                              <EditIcon
+                                boxSize={9}
+                                color={"teal.500"}
+                                backgroundColor="gray.100"
+                                p={2}
+                                borderRadius={"lg"}
+                                cursor={"pointer"}
+                                _hover={{
+                                  color: "gray.100",
+                                  backgroundColor: "teal.500"
+                                }}
+                                transitionDuration={"400ms"}
+                                onClick={() => setOpenModal(true)}
+                                border={"1px"}
+                                borderColor={"gray.400"}
+                              />
+                              <DeleteIcon
+                                boxSize={9}
+                                color={"gray.100"}
+                                backgroundColor="teal.500"
+                                p={2}
+                                borderRadius={"lg"}
+                                cursor={"pointer"}
+                                _hover={{
+                                  color: "teal.500",
+                                  backgroundColor: "gray.100"
+                                }}
+                                transitionDuration={"400ms"}
+                                border={"1px"}
+                                borderColor={"gray.400"}
+                                onClick={handleDeleteCampaign}
+                              />
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                )}
+                {!statusCampaign && (
+                  <>
+                    <div className="text-rose-500">
+                      <h3 className="font-bold  text-xl pt-4 md:text-2xl">* This Campaign has Ended.</h3>
+                    </div>
                     {accessToken && showUpdateDelete && (
                       <>
                         <div className="pt-8 flex gap-4 mx-4 text-slate-100 font-semibold">
@@ -195,7 +260,7 @@ export default function CampaignDetails({ id }) {
                               backgroundColor: "teal.500"
                             }}
                             transitionDuration={"400ms"}
-                            onClick={() => router.push(`./${campaign.id}/edit`)}
+                            onClick={() => setOpenModal(true)}
                             border={"1px"}
                             borderColor={"gray.400"}
                           />
@@ -218,9 +283,10 @@ export default function CampaignDetails({ id }) {
                         </div>
                       </>
                     )}
-                  </div>
-                </div>
+                  </>
+                )}
               </div>
+
               <div className="px-8 pt-12  w-full md:w-4/5 ">
                 <h3 className="font-bold pb-4 text-2xl md:text-3xl ">{campaign.title}</h3>
                 <h5>{campaign.description}</h5>
@@ -228,6 +294,8 @@ export default function CampaignDetails({ id }) {
             </div>
           </div>
         </section>
+
+        {openModal && <EditCampaign id={id} setCampaign={setCampaign} setOpenModal={setOpenModal} />}
 
         {/* SECTION COMMENTS & DONATIONS */}
         <section className="py-24 px-12 md:px-4  ">
