@@ -74,7 +74,11 @@ const Home = ({ query }) => {
 		let pagination = [];
 		for (let i = 0; i < campaigns.totalPages; i++) {
 			pagination.push(
-				<Text key={i} onClick={() => changePage(i + 1)}>
+				<Text px={2} py={1} borderRadius="md" cursor="pointer"
+					_hover={{ bg: "teal.500", color: "white" }}
+					bg={campaigns.currentPage === i + 1 ? "teal.500" : "gray.200"}
+					color={campaigns.currentPage === i + 1 ? "white" : "gray.700"}
+					key={i} onClick={() => changePage(i + 1)}>
 					{i + 1}
 				</Text>
 			);

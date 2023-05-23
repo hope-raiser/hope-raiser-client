@@ -1,5 +1,5 @@
 import { createNewBookmark, deleteBookmarkById } from "@/modules/fetch/bookmarks";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import {
   Card,
   CardBody,
@@ -17,7 +17,8 @@ import {
   AspectRatio,
   HStack,
   Box,
-  Flex
+  Flex,
+  Icon
 } from "@chakra-ui/react";
 import { Divider } from "antd";
 import Link from "next/link";
@@ -65,7 +66,9 @@ function CampaignCard(props) {
     return (
       <>
         <Container>
-          <IconButton onClick={handleAddBookmark} icon={<AddIcon />} />
+          <IconButton onClick={handleAddBookmark}>
+            <Icon as={status ? MinusIcon : AddIcon} />
+          </IconButton>
         </Container>
       </>
     );
@@ -74,10 +77,18 @@ function CampaignCard(props) {
   return (
     <>
       <Card variant="elevated" minHeight="sm" minWidth="sm" maxWidth="lg">
-        <CardHeader>
-          <Carousel image={campaign.banner.map((bann) => bann.image)} />
-        </CardHeader>
         <Link href={`/campaigns/${campaign.id}`}>
+          <CardHeader>
+            {campaign.banner.map((bann, index) => {
+              return (
+                <>
+                  <AspectRatio ratio={16 / 9}>
+                    <Image fallback="https://placehold.co/800x450" key={index} src={bann.image} />
+                  </AspectRatio>
+                </>
+              );
+            })}
+          </CardHeader>
           <CardBody>
             <Stack my="1" spacing="2">
               <Heading size="lg">{campaign.title}</Heading>
