@@ -1,7 +1,4 @@
-import {
-  createNewBookmark,
-  deleteBookmarkById,
-} from "@/modules/fetch/bookmarks";
+import { createNewBookmark, deleteBookmarkById } from "@/modules/fetch/bookmarks";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import {
   Card,
@@ -21,7 +18,7 @@ import {
   HStack,
   Box,
   Flex,
-  Icon,
+  Icon
 } from "@chakra-ui/react";
 import { Divider } from "antd";
 import Link from "next/link";
@@ -49,16 +46,13 @@ function CampaignCard(props) {
 
     const handleAddBookmark = async () => {
       const data = {
-        campaignId: campaign.id,
+        campaignId: campaign.id
       };
       if (!status) {
         await createNewBookmark(data);
         fetchCampaigns();
       } else {
-        let currentBookmark = bookmark.find(
-          (element) =>
-            element.userId === user.id && element.campaignId === campaign.id
-        );
+        let currentBookmark = bookmark.find((element) => element.userId === user.id && element.campaignId === campaign.id);
         if (currentBookmark) {
           await deleteBookmarkById(currentBookmark.id);
           fetchCampaigns();
@@ -81,18 +75,16 @@ function CampaignCard(props) {
 
   return (
     <>
-      <Card variant="elevated" minHeight="sm" minWidth="sm" maxWidth="lg">
+      <Card variant="elevated">
         <Link href={`/campaigns/${campaign.id}`}>
           <CardHeader>
             {campaign.banner.map((bann, index) => {
               return (
-                <AspectRatio ratio={16 / 9}>
-                  <Image
-                    fallback="https://placehold.co/800x450"
-                    key={index}
-                    src={bann.image}
-                  />
-                </AspectRatio>
+                <>
+                  <AspectRatio ratio={16 / 9}>
+                    <Image fallback="https://placehold.co/800x450" key={index} src={bann.image} />
+                  </AspectRatio>
+                </>
               );
             })}
           </CardHeader>
@@ -103,17 +95,9 @@ function CampaignCard(props) {
             </Stack>
           </CardBody>
         </Link>
-        <CardFooter
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <CardFooter display="flex" justifyContent="space-between" alignItems="center">
           <Box>
-            <VStack
-              divider={<StackDivider borderColor="gray.200" />}
-              spacing={4}
-              align="stretch"
-            >
+            <VStack divider={<StackDivider borderColor="gray.200" />} spacing={4} align="stretch">
               <Text color="blue.600" fontSize="md" align="start">
                 Current Donation<br></br>
                 <FormatCurrency amount={campaign.currentDonation} />
