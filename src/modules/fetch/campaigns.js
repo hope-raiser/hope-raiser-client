@@ -4,9 +4,9 @@ import Swal from "sweetalert2";
 async function getAllCampaign(params) {
   try {
     let path = "/campaigns";
-    let {category_id, limit, page} = params
+    const {category_id, page, limit} = params
     
-    limit = 3
+  
     // let hapus = ""
     // filter length 1
     let filter = "?"
