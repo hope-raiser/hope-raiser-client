@@ -76,7 +76,7 @@ function CampaignCard(props) {
 
   return (
     <>
-      <Card variant="elevated" minHeight="sm" minWidth="sm" maxWidth="lg">
+      <Card variant="elevated">
         <Link href={`/campaigns/${campaign.id}`}>
           <CardHeader>
             {campaign.banner.map((bann, index) => {
