@@ -4,34 +4,33 @@ import Swal from "sweetalert2";
 async function getAllCampaign(params) {
   try {
     let path = "/campaigns";
-    let {category_id, limit, page} = params
-    
-    limit = 3
+    let { category_id, limit, page } = params;
+
+    limit = 5;
     // let hapus = ""
     // filter length 1
-    let filter = "?"
+    let filter = "?";
 
-    if(category_id) {
-      if(filter.length > 1){
-        filter += "&"
+    if (category_id) {
+      if (filter.length > 1) {
+        filter += "&";
       }
-      filter += `category_id=${category_id}`
-      
+      filter += `category_id=${category_id}`;
     }
-    if(limit) {
-      if(filter.length > 1){
-        filter += "&"
+    if (limit) {
+      if (filter.length > 1) {
+        filter += "&";
       }
-      filter += `limit=${limit}`
+      filter += `limit=${limit}`;
     }
-    if(page) {
-      if(filter.length > 1){
-        filter += "&"
+    if (page) {
+      if (filter.length > 1) {
+        filter += "&";
       }
-      filter += `page=${page}`
+      filter += `page=${page}`;
     }
-    if(filter.length > 1) {
-      path += filter
+    if (filter.length > 1) {
+      path += filter;
     }
 
     const response = await instance.get(path);
