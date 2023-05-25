@@ -1,9 +1,9 @@
 import { CircularProgress, Image, Tab } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getCampaignDetail, deleteCampaignById } from "@/modules/fetch/campaigns";
+import { createNewBookmark, deleteBookmarkById } from "@/modules/fetch/bookmarks";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
-import Link from "next/link";
 import DonationCard from "@/components/donationCard";
 import TabDonation from "@/components/TabDonation";
 import FormatCurrency from "@/components/FormatCurrency";
@@ -12,9 +12,10 @@ import TabComment from "@/components/TabComment";
 import Swal from "sweetalert2";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import EditCampaign from "@/components/editCampaign";
-import Donation from "./donations/index.page";
+import ProgressBar from "@/components/BarProgress";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 
 export default function CampaignDetails({ id }) {
   const [campaign, setCampaign] = useState({});
@@ -23,14 +24,19 @@ export default function CampaignDetails({ id }) {
   const [updateDelete, setUpdateDelete] = useState(false);
   const [tabContent, setTabContent] = useState(1);
   const [statusCampaign, setStatusCampaign] = useState(true);
+  const [bookmark, setBookmark] = useState(false);
 
   const [openModal, setOpenModal] = useState(false);
   const [openModalDonate, setOpenModalDonate] = useState(false);
+
+  const targetDonation = campaign.goal;
+  const currentDonation = campaign.currentDonation;
 
   const router = useRouter();
   let accessToken = "";
   let dataUser = "";
 
+  // FIND DATA USER
   if (typeof window !== "undefined") {
     accessToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
@@ -62,6 +68,50 @@ export default function CampaignDetails({ id }) {
     fetchCampaign();
   }, []);
 
+  const IconBookmark = () => {
+    const checkStatus = () => {
+      let returnStatus = false;
+      campaign.bookmark.forEach((bookmark) => {
+        if (bookmark.userId === dataUser.id) {
+          returnStatus = true;
+        }
+      });
+
+      return returnStatus;
+    };
+
+    const [status, setStatus] = useState(checkStatus());
+
+    const handleAddBookmark = async () => {
+      const data = {
+        campaignId: campaign.id
+      };
+      if (!status) {
+        await createNewBookmark(data);
+        fetchCampaign();
+      } else {
+        let currentBookmark = campaign.bookmark.find((element) => element.userId === dataUser.id && element.campaignId === campaign.id);
+        if (currentBookmark) {
+          await deleteBookmarkById(currentBookmark.id);
+          fetchCampaign();
+        }
+      }
+
+      setStatus(!status);
+    };
+
+    return (
+      <>
+        <div
+          className="mt-8 w-32 h-8 mx-1 px-1 gap-2 rounded-sm ring-1 ring-Teal flex items-center justify-center cursor-pointer"
+          onClick={handleAddBookmark}
+        >
+          {status ? <BsBookmarkFill /> : <BsBookmark />}
+          <span className={status ? "font-medium text-sm" : "font-normal text-sm"}>Bookmark</span>
+        </div>
+      </>
+    );
+  };
   // FORMAT DATE
   function daysLeft(inputDate) {
     const date = new Date(inputDate);
@@ -169,23 +219,24 @@ export default function CampaignDetails({ id }) {
                       <h3 className="font-bold text-Teal text-2xl pt-4 md:text-4xl">
                         <FormatCurrency amount={campaign.currentDonation} />
                       </h3>
-                      <p className="font-normal text-sm pt-2">
+                      <ProgressBar target={targetDonation} current={currentDonation} />
+                      <p className="font-normal text-xs pt-2 text-end">
                         Target Donation{" "}
-                        <span className="font-semibold text-base">
+                        <span className="font-semibold ms-1 text-base">
                           <FormatCurrency amount={campaign.goal} />
                         </span>
                       </p>
-                      <div className="flex flex-wrap pt-6 gap-12 ">
+                      <div className="flex flex-wrap pt-8 gap-12 ">
                         <div className="text-center ">
-                          <p className="font-semibold text-2xl ">{campaign.donations.length}</p>
-                          <h4 className="font-normal text-base">Donatur</h4>
+                          <h4 className="font-semibold text-2xl ">{campaign.donations.length}</h4>
+                          <p className="font-normal text-base">Donatur</p>
                         </div>
                         <div className=" text-center ">
-                          <p className="font-semibold text-2xl">{daysLeft(campaign.endDate)} </p>
-                          <h4 className="font-normal text-base">Days ago</h4>
+                          <h4 className="font-semibold text-2xl">{daysLeft(campaign.endDate)} </h4>
+                          <p className="font-normal text-base">Days ago</p>
                         </div>
                       </div>
-                      <div className="pt-8">
+                      <div className="pt-8 ">
                         {buttonDonate && (
                           <>
                             <button
@@ -198,6 +249,7 @@ export default function CampaignDetails({ id }) {
                             </button>
                           </>
                         )}
+                        <IconBookmark />
                         {accessToken && updateDelete && (
                           <>
                             <div className="pt-8 flex gap-4 mx-4 text-slate-100 font-semibold">

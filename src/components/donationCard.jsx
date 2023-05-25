@@ -1,5 +1,5 @@
 import { createNewDonation } from "@/modules/fetch/donations";
-import { Button, FormControl, FormLabel, Input, Text, VStack, useToast, Center, Box, Stack } from "@chakra-ui/react";
+import { Button, FormControl, FormLabel, Input, Text, VStack, useToast, Center, Box, Stack, Container } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { getCampaignDetail } from "@/modules/fetch/campaigns";
@@ -71,7 +71,7 @@ function DonationCard({ id, setCampaign, campaign, setOpenModalDonate }) {
       backdropBlur="4px"
       onClick={handleClose}
     >
-      <Box rounded={"xl"} boxShadow={"lg"} p={8} w={"sm"} bg={"#fefefe"} data-aos="zoom-in">
+      <Box rounded={"xl"} boxShadow={"lg"} p={8} w={{ base: "2xs", md: "md" }} h="auto" bg={"#fefefe"} data-aos="zoom-in">
         <Stack spacing={4}>
           <Stack spacing={0}>
             <Text fontWeight={"medium"} fontSize={"lg"}>
