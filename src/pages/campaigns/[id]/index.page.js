@@ -5,7 +5,7 @@ import { deleteCampaignById } from "@/modules/fetch/campaigns";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import DonationCard from "@/components/donationCard";
+import DonationCard from "@/components/DonationCard";
 import TabDonation from "@/components/TabDonation";
 import FormatCurrency from "@/components/FormatCurrency";
 import TabComment from "@/components/TabComment";

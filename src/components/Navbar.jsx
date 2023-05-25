@@ -45,16 +45,23 @@ const Navbar = () => {
       <Stack direction="row" spacing="10">
         <Link href="/categories">
           <Button colorScheme="white" variant="link">
-            CATEGORIES
+            Categories
           </Button>
         </Link>
         {isLogin && (
           <Link href="/users/bookmark">
             <Button colorScheme="white" variant="link">
-              SAVED
+              Saved
             </Button>
           </Link>
         )}
+         {isLogin && (
+         <Link href="/users">
+            <Button colorScheme="white" variant="link">
+              Profile
+            </Button>
+          </Link>
+          )}
       </Stack>
 
       <Spacer />
