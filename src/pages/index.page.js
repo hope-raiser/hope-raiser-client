@@ -110,8 +110,8 @@ const Home = ({ query }) => {
       <Layout user={userData}>
         <HeroSection />
         {/* SECTION CAMPAIGN CARD */}
-        <section className=" py-24 px-4 md:px-12  border-b border-slate-200">
-          <div className="container  mx-auto" id="campaign">
+        <section className=" py-24 px-4 md:px-12  border-b border-slate-200" id="campaign">
+          <div className="container  mx-auto">
             <h1 className="text-xl lg:text-3xl 2xl:text-4xl font-semibold text-center mb-8">Explore Campaigns</h1>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 ">
               {campaigns.data.map((campaign, idx) => (
@@ -124,25 +124,29 @@ const Home = ({ query }) => {
                 />
               ))}
             </div>
-            <div className="w-full flex gap-2 mt-12  items-center justify-center">
-              <ChevronLeftIcon
-                onClick={prevPage}
-                boxSize={6}
-                cursor={"pointer"}
-                _hover={{ color: "white", bg: "blackAlpha.700", rounded: "full" }}
-              />
-              {processPaginations()}
-              <ChevronRightIcon
-                onClick={nextPage}
-                boxSize={6}
-                cursor={"pointer"}
-                _hover={{ color: "white", bg: "blackAlpha.700", rounded: "full" }}
-              />
-            </div>
-            {router.asPath.includes(category_id) && (
-              <button onClick={handleClick} className="font-semibold rounded-md px-2 py-2 bg-Teal text-slate-100">
-                View All Campaign
-              </button>
+            {campaigns.data.length > 0 && (
+              <>
+                <div className="w-full flex gap-2 mt-12  items-center justify-center">
+                  <ChevronLeftIcon
+                    onClick={prevPage}
+                    boxSize={6}
+                    cursor={"pointer"}
+                    _hover={{ color: "white", bg: "blackAlpha.700", rounded: "full" }}
+                  />
+                  {processPaginations()}
+                  <ChevronRightIcon
+                    onClick={nextPage}
+                    boxSize={6}
+                    cursor={"pointer"}
+                    _hover={{ color: "white", bg: "blackAlpha.700", rounded: "full" }}
+                  />
+                </div>
+                {router.asPath.includes(category_id) && (
+                  <button onClick={handleClick} className="font-semibold rounded-md px-2 py-2 bg-Teal text-slate-100">
+                    View All Campaign
+                  </button>
+                )}
+              </>
             )}
           </div>
         </section>
