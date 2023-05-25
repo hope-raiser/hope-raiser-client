@@ -72,7 +72,7 @@ function NewCampaign() {
   return (
     <Layout>
       <form onSubmit={handleSubmit}>
-        <VStack spacing="4">
+        <VStack m="5" spacing="4">
           <FormControl>
             <FormLabel>Campaign Name</FormLabel>
             <Input name="title" required />

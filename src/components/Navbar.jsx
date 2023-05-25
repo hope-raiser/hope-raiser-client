@@ -37,7 +37,7 @@ const Navbar = () => {
       <Link href="/">
         <Flex align="center" mr={5} cursor="pointer">
           <Text fontSize="xl" fontWeight="bold">
-            HopeRaiser
+            HOPERAISER
           </Text>
         </Flex>
       </Link>
