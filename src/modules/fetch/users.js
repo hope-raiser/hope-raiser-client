@@ -1,5 +1,6 @@
 import useAuthStore from "../authStore";
 import { instance } from "../axios/index.js";
+import Swal from "sweetalert2";
 
 async function registerUser(data) {
   try {
@@ -41,15 +42,23 @@ async function getAllUsers() {
   }
 }
 
-async function updateUser(id, name, password) {
+async function updateUser(id, data) {
   try {
-    const response = await instance.patch(`/users/update-user/${id}`, {
-      name,
-      password,
+    const response = await instance.put(`/users/update`, { ...data });
+    Swal.fire({
+      position: "middle",
+      icon: "success",
+      title: "Update Profile Successfully.",
+      showConfirmButton: false,
+      timer: 1500
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: error.response.data.message || "Something went wrong"
+    });
   }
 }
 
