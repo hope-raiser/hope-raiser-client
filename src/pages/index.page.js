@@ -2,20 +2,7 @@ import Layout from "@/components/Layout";
 import CampaignCard from "../components/CampaignCard.jsx";
 import { useEffect, useState } from "react";
 import { getAllCampaign } from "@/modules/fetch/campaigns";
-import {
-  SimpleGrid,
-  CircularProgress,
-  Box,
-  HStack,
-  Text,
-  Flex,
-  Image,
-  IconButton,
-  Container,
-  Center,
-  Heading,
-  Wrap
-} from "@chakra-ui/react";
+import { CircularProgress, Text, Flex, Image } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import useAuthStore from "@/modules/authStore";
 import { CopyIcon, ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
@@ -31,7 +18,7 @@ const Home = ({ query }) => {
   const { category_id } = router.query;
   const userData = useAuthStore((state) => state.user);
 
-  const fetchCampaigns = async () => {
+  const fetchCampaigns = async (category_id) => {
     const data = await getAllCampaign({ category_id, page });
     setCampaign(data);
 
@@ -51,7 +38,7 @@ const Home = ({ query }) => {
       useAuthStore.setState({ user: parsedUser }); // setting user data ke local storage
     }
     fetchUser();
-    fetchCampaigns();
+    fetchCampaigns(category_id);
   }, []);
 
   useEffect(() => {
@@ -70,7 +57,7 @@ const Home = ({ query }) => {
   }
 
   async function changePage(inputPage) {
-    const data = await getAllCampaign({ page: inputPage });
+    const data = await getAllCampaign({ page: inputPage, category_id: category_id });
     setCampaign(data);
     setLoading(false);
   }
@@ -109,13 +96,22 @@ const Home = ({ query }) => {
     changePage(next);
   };
 
+  function handleClick() {
+    router.push({
+      pathname: "/",
+      hash: "#campaign"
+    });
+
+    fetchCampaigns(!category_id);
+  }
+
   return (
     <>
       <Layout user={userData}>
         <HeroSection />
         {/* SECTION CAMPAIGN CARD */}
         <section className=" py-24 px-4 md:px-12  border-b border-slate-200">
-          <div className="container  mx-auto ">
+          <div className="container  mx-auto" id="campaign">
             <h1 className="text-xl lg:text-3xl 2xl:text-4xl font-semibold text-center mb-8">Explore Campaigns</h1>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 ">
               {campaigns.data.map((campaign, idx) => (
@@ -128,25 +124,29 @@ const Home = ({ query }) => {
                 />
               ))}
             </div>
-            <div className="w-full flex gap-2 mt-12 justify-center items-center">
+            <div className="w-full flex gap-2 mt-12  items-center justify-center">
               <ChevronLeftIcon
-                w={6}
-                h={6}
                 onClick={prevPage}
+                boxSize={6}
                 cursor={"pointer"}
-                _hover={{ color: "white", bg: "blackAlpha.600", rounded: "full", duration: 300 }}
+                _hover={{ color: "white", bg: "blackAlpha.700", rounded: "full" }}
               />
               {processPaginations()}
               <ChevronRightIcon
-                w={6}
-                h={6}
                 onClick={nextPage}
+                boxSize={6}
                 cursor={"pointer"}
-                _hover={{ color: "white", bg: "blackAlpha.600", rounded: "full", duration: 300 }}
+                _hover={{ color: "white", bg: "blackAlpha.700", rounded: "full" }}
               />
             </div>
+            {router.asPath.includes(category_id) && (
+              <button onClick={handleClick} className="font-semibold rounded-md px-2 py-2 bg-Teal text-slate-100">
+                View All Campaign
+              </button>
+            )}
           </div>
         </section>
+
         {/* SECTION ABOUT US */}
         <section className="py-24 px-8 md:px-28 ">
           <div className="container mx-auto  max-w-[1400px]">
