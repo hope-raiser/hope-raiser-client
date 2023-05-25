@@ -26,13 +26,13 @@ const Home = ({ query }) => {
   const [campaigns, setCampaign] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
-  // const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
   const router = useRouter();
-  const { category_id, page, limit } = router.query;
+  const { category_id } = router.query;
   const userData = useAuthStore((state) => state.user);
 
   const fetchCampaigns = async () => {
-    const data = await getAllCampaign({ category_id, page, limit });
+    const data = await getAllCampaign({ category_id, page });
     setCampaign(data);
 
     setLoading(false);
