@@ -55,13 +55,13 @@ const Navbar = () => {
             </Button>
           </Link>
         )}
-         {isLogin && (
-         <Link href="/users">
+        {isLogin && (
+          <Link href="/users">
             <Button colorScheme="white" variant="link">
               Profile
             </Button>
           </Link>
-          )}
+        )}
       </Stack>
 
       <Spacer />
@@ -79,17 +79,17 @@ const Navbar = () => {
           </DarkMode>
         </Link>
       ) : (
-        <DarkMode>
-          <Button
-            colorScheme="red"
-            onClick={() => {
-              window.localStorage.removeItem("token");
-              setIsLogin(false);
-            }}
-          >
-            Logout
-          </Button>
-        </DarkMode>
+        <Button
+          colorScheme="red"
+          onClick={() => {
+            window.localStorage.removeItem("token");
+            window.localStorage.removeItem("user");
+            setIsLogin(false);
+            window.location.reload();
+          }}
+        >
+          Logout
+        </Button>
       )}
       {/* <Link href="/profile">
         <Button colorScheme="white" variant="link">

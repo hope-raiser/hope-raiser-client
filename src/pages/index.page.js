@@ -12,11 +12,11 @@ import HeroSection from "@/components/HeroSection.jsx";
 const Home = ({ query }) => {
   const [campaigns, setCampaign] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState("");
   const [page, setPage] = useState(1);
   const router = useRouter();
   const { category_id } = router.query;
-  const userData = useAuthStore((state) => state.user);
+  let userData = useAuthStore((state) => state.user);
 
   const fetchCampaigns = async (category_id) => {
     const data = await getAllCampaign({ category_id, page });
@@ -26,8 +26,10 @@ const Home = ({ query }) => {
   };
 
   const fetchUser = async () => {
-    const userData = await getLoginUser();
-    setCurrentUser(userData);
+    if (window.localStorage.getItem("token")) {
+      const data = await getLoginUser();
+      setCurrentUser(data);
+    }
   };
 
   useEffect(() => {
