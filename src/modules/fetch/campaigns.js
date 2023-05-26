@@ -64,6 +64,13 @@ async function editCampaign(id, data) {
   try {
     const response = await instance.put(`/campaigns/${id}`, { ...data });
 
+    Swal.fire({
+      position: "top",
+      icon: "success",
+      title: "Update Campaign Successfully.",
+      showConfirmButton: false,
+      timer: 1500
+    });
     return response.data;
   } catch (error) {
     Swal.fire({
