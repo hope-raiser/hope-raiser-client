@@ -4,7 +4,8 @@ import { getCampaignDetail, deleteCampaignById } from "@/modules/fetch/campaigns
 import { createNewBookmark, deleteBookmarkById } from "@/modules/fetch/bookmarks";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
-import DonationCard from "@/components/donationCard";
+import Link from "next/link";
+import DonationCard from "@/components/DonationCard";
 import TabDonation from "@/components/TabDonation";
 import FormatCurrency from "@/components/FormatCurrency";
 import Carousel from "@/components/Carousel";

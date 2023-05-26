@@ -37,7 +37,7 @@ const Navbar = () => {
       <Link href="/">
         <Flex align="center" mr={5} cursor="pointer">
           <Text fontSize="xl" fontWeight="bold">
-            HopeRaiser
+            HOPERAISER
           </Text>
         </Flex>
       </Link>
@@ -45,13 +45,20 @@ const Navbar = () => {
       <Stack direction="row" spacing="10">
         <Link href="/categories">
           <Button colorScheme="white" variant="link">
-            CATEGORIES
+            Categories
           </Button>
         </Link>
         {isLogin && (
           <Link href="/users/bookmark">
             <Button colorScheme="white" variant="link">
-              SAVED
+              Saved
+            </Button>
+          </Link>
+        )}
+        {isLogin && (
+          <Link href="/users">
+            <Button colorScheme="white" variant="link">
+              Profile
             </Button>
           </Link>
         )}
@@ -72,17 +79,17 @@ const Navbar = () => {
           </DarkMode>
         </Link>
       ) : (
-        <DarkMode>
-          <Button
-            colorScheme="red"
-            onClick={() => {
-              window.localStorage.removeItem("token");
-              setIsLogin(false);
-            }}
-          >
-            Logout
-          </Button>
-        </DarkMode>
+        <Button
+          colorScheme="red"
+          onClick={() => {
+            window.localStorage.removeItem("token");
+            window.localStorage.removeItem("user");
+            setIsLogin(false);
+            window.location.reload();
+          }}
+        >
+          Logout
+        </Button>
       )}
       {/* <Link href="/profile">
         <Button colorScheme="white" variant="link">

@@ -8,6 +8,8 @@ import Link from "next/link";
 SwiperCore.use([Navigation, Pagination]);
 
 export default function HeroSection() {
+  let token = "";
+
   const image = [
     {
       id: 1,
@@ -26,9 +28,13 @@ export default function HeroSection() {
     }
   ];
 
+  if (typeof window !== "undefined") {
+    token = window.localStorage.getItem("token");
+  }
+
   return (
     <>
-      <div className="w-full h-[440px] 2xl:h-[600px]">
+      <div className="w-full h-screen sm:h-[440px] 2xl:h-[600px]">
         <Swiper
           spaceBetween={0}
           slidesPerView={1}
@@ -44,10 +50,10 @@ export default function HeroSection() {
           {image.map((slide) => (
             <SwiperSlide key={slide.id}>
               <div className=" bg-cover h-full" style={{ backgroundImage: `url(${slide.url})` }}>
-                <div className="flex flex-col h-full mx-auto px-24 w-auto max-w-4xl items-center justify-center gap-4 drop-shadow-md">
-                  <h1 className="font-bold text-4xl lg:text-7xl text-white">GATHER HOPE</h1>
-                  <p className="font-normal text-sm lg:text-xl text-white max-h-40 max-w-xl break-all">{slide.text}</p>
-                  <Link href="/campaigns/create" target="_blank">
+                <div className="flex flex-col h-full mx-auto px-8 sm:px-24 w-auto max-w-4xl items-center justify-center gap-4 drop-shadow-md">
+                  <h1 className="font-bold text-5xl lg:text-7xl text-white">GATHER HOPE</h1>
+                  <p className="font-normal text-md lg:text-xl text-white max-h-40 max-w-xl break-all">{slide.text}</p>
+                  <Link href={token ? "campaigns/create" : "/login"}>
                     <button className="bg-Teal  rounded-sm px-3 py-2 font-semibold text-slate-100  text-sm md:text-lg hover:bg-teal-600 hover:text-slate-200 duration-300 mt-4">
                       Create Campaign
                     </button>

@@ -46,21 +46,27 @@ function CampaignCard(props) {
     const [status, setStatus] = useState(checkStatus());
 
     const handleAddBookmark = async () => {
+      if (!user) {
+        setTimeout(() => {
+          router.push("/login");
+        }, 200);
+      }
+
       const data = {
         campaignId: campaign.id
       };
-      if (!status) {
+      if (!status && user) {
         await createNewBookmark(data);
         fetchCampaigns();
+        setStatus(!status);
       } else {
         let currentBookmark = bookmark.find((element) => element.userId === user.id && element.campaignId === campaign.id);
         if (currentBookmark) {
           await deleteBookmarkById(currentBookmark.id);
           fetchCampaigns();
+          setStatus(true);
         }
       }
-
-      setStatus(!status);
     };
 
     return (
