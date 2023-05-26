@@ -3,7 +3,6 @@ import { Image } from "@chakra-ui/react";
 
 const Carousel = ({ image }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log(currentIndex, "CURRENT INDEX");
 
   const prevImage = () => {
     const newIndex = (currentIndex - 1 + image.length) % image.length;

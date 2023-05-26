@@ -1,10 +1,14 @@
 import { useState } from "react";
+import Router, { useRouter } from "next/router";
 import { createNewComment } from "@/modules/fetch/comments";
 import { Form } from "antd";
 import FormatCurrency from "./FormatCurrency";
 
-export default function TabComment({ campaign, fetchCampaign }) {
+export default function TabComment({ campaign, fetchCampaign, accessToken }) {
   const [comment, setComment] = useState("");
+  const router = useRouter();
+  const arrayComment = campaign.comment.map((comment) => comment);
+  const reverseArray = arrayComment.reverse();
 
   function FormatCommentDate({ commentDate }) {
     const date = new Date(commentDate);
@@ -20,23 +24,26 @@ export default function TabComment({ campaign, fetchCampaign }) {
   const handleCreateComment = async (e) => {
     e.preventDefault();
 
-    const payload = {
-      content: comment,
-      campaignId: campaign.id
-    };
+    if (accessToken) {
+      const payload = {
+        content: comment,
+        campaignId: campaign.id
+      };
 
-    if (payload.content) {
-      await createNewComment(payload);
+      if (payload.content) {
+        await createNewComment(payload);
+      }
+      setComment("");
+    } else {
+      router.push("/login");
     }
-
-    setComment("");
 
     fetchCampaign();
   };
 
   return (
     <>
-      <h1 className="font-bold text-Dark text-4xl mb-2 text-center pt-4">Comments</h1>
+      <h1 className="font-bold text-Dark text-3xl md:text-4xl mb-2 text-center pt-4">Comments</h1>
       <div className="flex flex-wrap">
         <div className="w-full pt-8">
           <h4 className="font-normal text-xl px-2 text-Dark">
@@ -55,13 +62,13 @@ export default function TabComment({ campaign, fetchCampaign }) {
             </div>
           </form>
           <div className="px-4">
-            {campaign.comment.map((comment, idx) => {
+            {reverseArray.map((comment) => {
               return (
                 <>
                   <div className="flex items-center gap-2">
                     <h4 className="font-semibold text-lg mb-1">{comment.user.name}</h4>
                     <p className="font-thin text-sm">
-                      <FormatCommentDate key={idx} commentDate={comment.createdAt} />
+                      <FormatCommentDate commentDate={comment.createdAt} />
                     </p>
                   </div>
                   <p className="pb-1 mb-6 border-b border-slate-100">{comment.content}</p>

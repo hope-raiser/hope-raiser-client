@@ -134,7 +134,7 @@ export default function CampaignDetails({ id }) {
   }
 
   useEffect(() => {
-    if (daysLeft(campaign.endDate) <= 0 || campaign.currentDonation >= campaign.goal) {
+    if (daysLeft(campaign.endDate) <= 0) {
       setStatusCampaign(false);
     }
   }, [campaign]);
@@ -198,7 +198,7 @@ export default function CampaignDetails({ id }) {
             <div className="mx-auto text-center">
               <h1 className="font-bold text-Dark text-2xl md:text-4xl mb-2">SUPPORT & DONATE!</h1>
             </div>
-            <div className="mt-12 flex flex-wrap ">
+            <div className="mt-4 lg:mt-12 flex flex-wrap ">
               <div className="w-full px-4 lg:px-0 lg:w-3/5">
                 <Carousel image={campaign.banner.map((banner) => banner.image)} />
                 <div className="flex gap-4 mx-4">
@@ -221,9 +221,9 @@ export default function CampaignDetails({ id }) {
                         <FormatCurrency amount={campaign.currentDonation} />
                       </h3>
                       <ProgressBar target={targetDonation} current={currentDonation} />
-                      <p className="font-normal text-xs pt-2 text-end">
-                        Target Donation{" "}
-                        <span className="font-semibold ms-1 text-base">
+                      <p className="font-normal text-xs pt-6 sm:pt-2 text-end">
+                        Goal{" "}
+                        <span className="font-semibold ms-1  text-sm md:text-md">
                           <FormatCurrency amount={campaign.goal} />
                         </span>
                       </p>
@@ -244,13 +244,16 @@ export default function CampaignDetails({ id }) {
                               onClick={() => {
                                 setOpenModalDonate(true);
                               }}
-                              className="bg-Teal md:w-full rounded-sm px-3 py-2 md:px-4 md:py-2 font-bold text-slate-100  text-sm md:text-xl hover:bg-slate-100 hover:text-Teal hover:ring-1 hover:ring-Teal duration-500"
+                              className="bg-Teal w-full rounded-sm px-3 py-2 md:px-4 md:py-2 font-bold text-slate-100  text-sm md:text-xl hover:bg-teal-700 hover:text-slate-200 duration-500"
                             >
                               DONATE NOW
                             </button>
                           </>
                         )}
-                        <IconBookmark />
+                        {accessToken && <IconBookmark />}
+                        <p className="py-4 px-2 text-gray-600">
+                          By <span className="font-semibold">{campaign.user.name}</span>
+                        </p>
                         {accessToken && updateDelete && (
                           <>
                             <div className="pt-8 flex gap-4 mx-4 text-slate-100 font-semibold">
@@ -340,7 +343,7 @@ export default function CampaignDetails({ id }) {
                 )}
               </div>
             </div>
-            <div className="px-4 md:px-8 mt-16  w-full  lg:w-4/6">
+            <div className="px-12 md:px-8 mt-16  w-full  lg:w-4/6">
               <h3 className="font-bold pb-4 text-2xl md:text-3xl text-center lg:text-left">{campaign.title}</h3>
               <h5>{campaign.description}</h5>
             </div>
@@ -352,10 +355,14 @@ export default function CampaignDetails({ id }) {
         {openModal && <EditCampaign id={id} setCampaign={setCampaign} setOpenModal={setOpenModal} />}
 
         {/* SECTION COMMENTS & DONATIONS */}
-        <section className="py-24 px-12 md:px-4  ">
-          <div className="container max-w-screen-md 2xl:max-w-screen-lg  mx-auto border-t border-slate-200">
+        <section className="py-24 px-12 md:px-24 lg:px-4  ">
+          <div className="container max-w-screen-md 2xl:max-w-screen-xl  mx-auto border-t border-slate-200">
             <ShowButton />
-            {tabContent === 1 ? <TabComment campaign={campaign} fetchCampaign={fetchCampaign} /> : <TabDonation campaign={campaign} />}
+            {tabContent === 1 ? (
+              <TabComment campaign={campaign} fetchCampaign={fetchCampaign} accessToken={accessToken} />
+            ) : (
+              <TabDonation campaign={campaign} />
+            )}
           </div>
         </section>
       </div>

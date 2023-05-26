@@ -143,12 +143,15 @@ const Home = ({ query }) => {
                     _hover={{ color: "white", bg: "blackAlpha.700", rounded: "full" }}
                   />
                 </div>
-                {router.asPath.includes(category_id) && (
-                  <button onClick={handleClick} className="font-semibold rounded-md px-2 py-2 bg-Teal text-slate-100">
-                    View All Campaign
-                  </button>
-                )}
               </>
+            )}
+            {router.asPath.includes(category_id) && (
+              <button
+                onClick={handleClick}
+                className="font-semibold text-xs md:text-base rounded-md px-2 py-2 mt-4 mx-4 bg-Teal text-slate-100"
+              >
+                View All Campaign
+              </button>
             )}
           </div>
         </section>
