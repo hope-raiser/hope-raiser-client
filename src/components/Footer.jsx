@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 function Footer() {
+
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
@@ -22,9 +23,9 @@ function Footer() {
           <div className="w-full lg:w-1/3 ">
             <div className="flex px-2 items-center">
               <Image src="https://placehold.co/75" fallback="https://placehold.co/75" alt="LOGO" className="text-slate-300" />
-              <div className="flex flex-wrap flex-col px-4 text-center">
+              <div className="flex flex-wrap flex-col px-4 text-center break-all">
                 <h2 className="text-Teal text-2xl font-bold tracking-wider">HOPERAISER</h2>
-                <span className="text-slate-200 text-xs mt-1 tracking-widest ">"Empowering Hope, Fueling Progress"</span>
+                <span className="text-slate-200 text-xs mt-1 tracking-widest ">&quot;Empowering Hope, Fueling Progress&quot;</span>
               </div>
             </div>
             <div className="pt-4 md:pt-8 md:w-2/3">
