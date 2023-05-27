@@ -21,11 +21,12 @@ import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 export default function CampaignDetails({ id }) {
   const [campaign, setCampaign] = useState({});
   const [isLoading, setLoading] = useState(true);
+
   const [buttonDonate, setButtonDonate] = useState(true);
   const [updateDelete, setUpdateDelete] = useState(false);
   const [tabContent, setTabContent] = useState(1);
   const [statusCampaign, setStatusCampaign] = useState(true);
-  const [bookmark, setBookmark] = useState(false);
+  const [bookmark, setBookmark] = useState(true);
 
   const [openModal, setOpenModal] = useState(false);
   const [openModalDonate, setOpenModalDonate] = useState(false);
@@ -50,6 +51,7 @@ export default function CampaignDetails({ id }) {
     if (dataUser.id === campaign.userId) {
       setUpdateDelete(true);
       setButtonDonate(false);
+      setBookmark(false);
     }
   }, [dataUser, campaign]);
 
@@ -250,7 +252,7 @@ export default function CampaignDetails({ id }) {
                             </button>
                           </>
                         )}
-                        {accessToken && <IconBookmark />}
+                        {accessToken && bookmark && <IconBookmark />}
                         <p className="py-4 px-2 text-gray-600">
                           By <span className="font-semibold">{campaign.user.name}</span>
                         </p>
