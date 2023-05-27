@@ -21,6 +21,7 @@ import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 export default function CampaignDetails({ id }) {
   const [campaign, setCampaign] = useState({});
   const [isLoading, setLoading] = useState(true);
+
   const [buttonDonate, setButtonDonate] = useState(true);
   const [updateDelete, setUpdateDelete] = useState(false);
   const [tabContent, setTabContent] = useState(1);
