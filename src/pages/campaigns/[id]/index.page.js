@@ -51,7 +51,6 @@ export default function CampaignDetails({ id }) {
     if (dataUser.id === campaign.userId) {
       setUpdateDelete(true);
       setButtonDonate(false);
-      setBookmark(false);
     }
   }, [dataUser, campaign]);
 
@@ -236,7 +235,7 @@ export default function CampaignDetails({ id }) {
                         </div>
                         <div className=" text-center ">
                           <h4 className="font-semibold text-2xl">{daysLeft(campaign.endDate)} </h4>
-                          <p className="font-normal text-base">Days ago</p>
+                          <p className="font-normal text-base">Days to go</p>
                         </div>
                       </div>
                       <div className="pt-8 ">
@@ -252,7 +251,7 @@ export default function CampaignDetails({ id }) {
                             </button>
                           </>
                         )}
-                        {accessToken && bookmark && <IconBookmark />}
+                        {accessToken && <IconBookmark />}
                         <p className="py-4 px-2 text-gray-600">
                           By <span className="font-semibold">{campaign.user.name}</span>
                         </p>
