@@ -69,11 +69,7 @@ function Profile() {
             <Input.Password disabled={!isOpen} />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-            {!isOpen && (
-              <Button type="primary" onClick={showModal}>
-                Edit
-              </Button>
-            )}
+            {!isOpen && <Button onClick={showModal}>Edit</Button>}
             <Modal
               title="Edit Profile"
               visible={isOpen}
@@ -82,9 +78,9 @@ function Profile() {
                 <Button key="cancel" onClick={handleCancel}>
                   Cancel
                 </Button>,
-                <Button key="save" type="primary" onClick={handleSave}>
+                <Button key="save" onClick={handleSave}>
                   Save
-                </Button>,
+                </Button>
               ]}
             >
               <Form

@@ -13,7 +13,7 @@ function Footer() {
 				setIsLogin(true);
 			}
 		}
-	}, [window.localStorage.getItem("token")]);
+	}, []);
 
 	return (
 		<footer className="bg-Dark pt-4 sticky bottom-0 w-full">

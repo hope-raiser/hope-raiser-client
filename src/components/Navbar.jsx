@@ -21,7 +21,7 @@ const Navbar = () => {
 				setIsLogin(true);
 			}
 		}
-	}, [window.localStorage.getItem("token")]);
+	}, []);
 
 	const toggleDropdown = () => {
 		setIsOpen(!isOpen);
