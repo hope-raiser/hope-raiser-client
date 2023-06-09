@@ -17,10 +17,12 @@ import ProgressBar from "@/components/BarProgress";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import { getLoginUser } from "@/modules/fetch/users";
 
 export default function CampaignDetails({ id }) {
   const [campaign, setCampaign] = useState({});
   const [isLoading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState("");
 
   const [buttonDonate, setButtonDonate] = useState(true);
   const [updateDelete, setUpdateDelete] = useState(false);
@@ -47,6 +49,13 @@ export default function CampaignDetails({ id }) {
     }
   }
 
+  const fetchUser = async () => {
+    if (window.localStorage.getItem("token")) {
+      const data = await getLoginUser();
+      setCurrentUser(data);
+    }
+  };
+
   useEffect(() => {
     if (dataUser.id === campaign.userId) {
       setUpdateDelete(true);
@@ -68,6 +77,7 @@ export default function CampaignDetails({ id }) {
   useEffect(() => {
     setLoading(true);
     fetchCampaign();
+    fetchUser();
   }, []);
 
   const IconBookmark = () => {
@@ -191,7 +201,7 @@ export default function CampaignDetails({ id }) {
   }
 
   return (
-    <Layout>
+    <Layout userMe={currentUser}>
       <div className=" min-h-screen ">
         {/* SECTION CAMPAIGN */}
         <section className="py-12 px-4 md:px-16 max-w-[1560px]  mx-auto">

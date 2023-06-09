@@ -1,12 +1,12 @@
 import useAuthStore from "@/modules/authStore";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Image } from "@chakra-ui/react";
+import { Avatar, Image } from "@chakra-ui/react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
 import { useEffect, useState } from "react";
 
-const Navbar = () => {
+const Navbar = ({userMe}) => {
 	//   const userData = useAuthStore((state) => state.user);
 	const router = useRouter();
 	const [isLogin, setIsLogin] = useState(false);
@@ -81,12 +81,8 @@ const Navbar = () => {
 						) : (
 							<>
 								<div className="relative">
-									<button
-										onClick={toggleDropdown}
-										className="bg-Teal px-5 py-2 text-sm text-slate-200 rounded-sm hover:text-slate-300 hover:bg-teal-700 duration-500"
-									>
-										Menu
-									</button>
+								<Avatar mt={5}  w={41} h={41} src={userMe.avatar} mb={4} onClick={toggleDropdown}/>
+									
 									{isOpen && (
 										<div className="absolute right-0 z-10 mt-2  bg-slate-50 rounded-sm shadow-md ">
 											<ul className="py-2 px-8 ">

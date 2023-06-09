@@ -44,7 +44,29 @@ async function getAllUsers() {
 
 async function updateUser(id, data) {
   try {
-    const response = await instance.put(`/users/update`, { ...data });
+    const response = await instance.put(`/users/update`, data);
+    Swal.fire({
+      position: "middle",
+      icon: "success",
+      title: "Update Profile Successfully.",
+      showConfirmButton: false,
+      timer: 1500
+    });
+    return response.data;
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: error.response.data.message || "Something went wrong"
+    });
+  }
+}
+
+async function updateAvatar(id, data) {
+  try {
+    const response = await instance.put(`/users/update-avatar`, data, {
+      headers: { "Content-Type": "multipart/form-data" }
+    });
     Swal.fire({
       position: "middle",
       icon: "success",
@@ -110,5 +132,6 @@ export {
   changePassword,
   updateUser,
   updateProfile,
-  getLoginUser
+  getLoginUser,
+  updateAvatar
 };

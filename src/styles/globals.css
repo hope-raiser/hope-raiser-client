@@ -123,6 +123,10 @@ a {
   width: 100%;
 }
 
+.rounded-sm {
+  border-radius: 5px;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

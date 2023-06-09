@@ -16,6 +16,8 @@ import { SingleDatepicker } from "chakra-dayzed-datepicker";
 import React, { useState, useEffect } from "react";
 import { getAllCategory } from "@/modules/fetch/categories";
 import { useRouter } from "next/router";
+import useAuthStore from "@/modules/authStore";
+import { getLoginUser } from "@/modules/fetch/users";
 
 function NewCampaign() {
   // using toast from chakra
@@ -25,14 +27,31 @@ function NewCampaign() {
   const [categories, setCategories] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [categoryIds, setCategoryIds] = useState([]);
+  const [currentUser, setCurrentUser] = useState("");
+  let userData = useAuthStore((state) => state.user);
+
+  const fetchUser = async () => {
+    if (window.localStorage.getItem("token")) {
+      const data = await getLoginUser();
+      setCurrentUser(data);
+    }
+  };
 
   useEffect(() => {
     Promise.all([getAllCategory()]).then((values) => {
       setCategories(...values);
       setLoading(false);
     });
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser); // parsing agar keterima sebagai local storage
+      useAuthStore.setState({ user: parsedUser }); // setting user data ke local storage
+    }
+    fetchUser();
   }, []);
   console.log(categories);
+
+
   // loading page
   if (isLoading) {
     return (
@@ -70,7 +89,7 @@ function NewCampaign() {
     }
   };
   return (
-    <Layout>
+    <Layout userMe={currentUser}>
       <form onSubmit={handleSubmit}>
         <VStack m="5" spacing="4">
           <FormControl>

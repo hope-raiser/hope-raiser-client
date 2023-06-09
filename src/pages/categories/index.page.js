@@ -3,18 +3,38 @@ import { useEffect, useState } from "react";
 import { CircularProgress, SimpleGrid, Box, Heading, Text, Center, Flex, Container } from "@chakra-ui/react";
 import { getAllCategory } from "@/modules/fetch/categories";
 import { useRouter } from "next/router";
+import useAuthStore from "@/modules/authStore";
+import { getLoginUser } from "@/modules/fetch/users";
 
 function Category() {
   const [categories, setCategories] = useState("");
   const [isLoading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState("");
+  let userData = useAuthStore((state) => state.user);
   const router = useRouter();
+
+  const fetchUser = async () => {
+    if (window.localStorage.getItem("token")) {
+      const data = await getLoginUser();
+      setCurrentUser(data);
+    }
+  };
 
   useEffect(() => {
     Promise.all([getAllCategory()]).then((values) => {
       setCategories(...values);
       setLoading(false);
     });
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser); // parsing agar keterima sebagai local storage
+      useAuthStore.setState({ user: parsedUser }); // setting user data ke local storage
+    }
+    fetchUser();
   }, []);
+
+
+
 
   if (isLoading) {
     return (
@@ -56,7 +76,7 @@ function Category() {
 
   return (
     <>
-      <Layout>
+      <Layout userMe={currentUser}>
         <Heading textAlign="center" pt={{ base: 8, sm: 20 }} fontSize={{ base: "3xl", sm: "6xl" }}>
           Explore Causes
         </Heading>

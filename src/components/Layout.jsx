@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import useAuthStore from "@/modules/authStore";
 import { useRouter } from "next/router";
 
-function Layout({ children }) {
+function Layout({ children, userMe}) {
   // const [isLogin, setIsLogin] = useState(false);
   const userData = useAuthStore((state) => state.user);
   const router = useRouter();
@@ -22,7 +22,7 @@ function Layout({ children }) {
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar userMe={userMe}></Navbar>
       {children}
       <Footer></Footer>
     </>

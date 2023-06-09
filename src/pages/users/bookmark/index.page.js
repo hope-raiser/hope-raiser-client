@@ -32,7 +32,7 @@ export default function UserDetails({ id }) {
 
   return (
     <>
-      <Layout>
+      <Layout userMe={user}>
         {bookmarks.length === 0 && (
           <>
             <Center>

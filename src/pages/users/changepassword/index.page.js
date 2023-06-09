@@ -3,12 +3,22 @@ import useAuthStore from "@/modules/authStore";
 import { Button, Form, Input, message, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { updateProfile } from "@/modules/fetch/users";
+import { getLoginUser } from "@/modules/fetch/users";
 
 function Profile() {
   const setUser = useAuthStore((state) => state.setUser); // agar header juga berubah name-nya
   const userData = useAuthStore((state) => state.user);
   const [isOpen, setIsOpen] = useState(false);
   const [form] = Form.useForm(); // a form instance dari antd
+  const [currentUser, setCurrentUser] = useState("");
+
+  const fetchUser = async () => {
+    if (window.localStorage.getItem("token")) {
+      const data = await getLoginUser();
+      setCurrentUser(data);
+    }
+  };
+
 
   useEffect(() => {
     const storedValues = JSON.parse(localStorage.getItem("profileFormValues"));
@@ -16,6 +26,12 @@ function Profile() {
     if (storedValues) {
       form.setFieldsValue(storedValues); // panggil stored values di form, ketika page baru di load
     }
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser); // parsing agar keterima sebagai local storage
+      useAuthStore.setState({ user: parsedUser }); // setting user data ke local storage
+    }
+    fetchUser();
   }, [form]);
 
   const showModal = () => {
@@ -49,7 +65,7 @@ function Profile() {
   };
 
   return (
-    <Layout>
+    <Layout userMe={currentUser}>
       <div className="profileContainer">
         <h1 className="profileHeading">Profile</h1>
         <Form

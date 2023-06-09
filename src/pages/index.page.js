@@ -114,7 +114,6 @@ const Home = ({ query }) => {
 	function handleClick() {
 		router.push({
 			pathname: "/",
-			hash: "#campaign",
 		});
 
 		fetchCampaigns(!category_id);
@@ -122,7 +121,7 @@ const Home = ({ query }) => {
 
 	return (
 		<>
-			<Layout user={userData}>
+			<Layout user={userData} userMe={currentUser}>
 				<HeroSection />
 				{/* SECTION CAMPAIGN CARD */}
 				<section

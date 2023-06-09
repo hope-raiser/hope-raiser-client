@@ -3,6 +3,11 @@ import Router, { useRouter } from "next/router";
 import { createNewComment } from "@/modules/fetch/comments";
 import { Form } from "antd";
 import FormatCurrency from "./FormatCurrency";
+import { Avatar } from "@chakra-ui/react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 export default function TabComment({ campaign, fetchCampaign, accessToken }) {
   const [comment, setComment] = useState("");
@@ -63,13 +68,17 @@ export default function TabComment({ campaign, fetchCampaign, accessToken }) {
           </form>
           <div className="px-4">
             {reverseArray.map((comment) => {
+              const commentDate = dayjs(comment.createdAt).fromNow();
               return (
                 <>
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-semibold text-lg mb-1">{comment.user.name}</h4>
-                    <p className="font-thin text-sm">
-                      <FormatCommentDate commentDate={comment.createdAt} />
-                    </p>
+                   <div className="flex gap-2">
+                    <Avatar size='md' src={comment.user.avatar} mb={4} />
+                    <div>
+                      <h4 className="font-semibold text-lg ">{comment.user.name}</h4>
+                      <p className="font-thin text-sm">
+                        {commentDate}
+                      </p>
+                    </div>
                   </div>
                   <p className="pb-1 mb-6 border-b border-slate-100">{comment.content}</p>
                 </>
