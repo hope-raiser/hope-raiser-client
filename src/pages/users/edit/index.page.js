@@ -58,17 +58,12 @@ function UpdateUser({ id }) {
     event.preventDefault();
 
     let formData = new FormData();
+    formData.append('name', name);
+    formData.append('biography', biography);
     formData.append('avatar', avatar);
 
-    const payload = {
-      name,
-      biography
-    };
+    await updateUser(id, formData)
 
-    await updateAvatar(id, formData)
-
-    await updateUser(id, payload);
-    
     fetchUser();
   }
 

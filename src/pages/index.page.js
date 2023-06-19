@@ -133,13 +133,13 @@ const Home = ({ query }) => {
 							Explore Campaigns
 						</h1>
 						<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 ">
-							{campaigns.data.map((campaign, idx) => (
+							{campaigns.data.map((campaign) => (
 								<CampaignCard
 									campaign={campaign}
 									bookmark={campaign.bookmark}
 									fetchCampaigns={fetchCampaigns}
 									user={currentUser}
-									key={idx}
+									key={campaign.id}
 								/>
 							))}
 						</div>

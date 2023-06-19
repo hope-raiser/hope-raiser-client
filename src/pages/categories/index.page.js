@@ -10,7 +10,6 @@ function Category() {
   const [categories, setCategories] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState("");
-  let userData = useAuthStore((state) => state.user);
   const router = useRouter();
 
   const fetchUser = async () => {
@@ -25,11 +24,6 @@ function Category() {
       setCategories(...values);
       setLoading(false);
     });
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser); // parsing agar keterima sebagai local storage
-      useAuthStore.setState({ user: parsedUser }); // setting user data ke local storage
-    }
     fetchUser();
   }, []);
 
@@ -82,48 +76,47 @@ function Category() {
         </Heading>
         <Center>
           <SimpleGrid columns={{ base: 2, lg: 3 }} spacing={{ base: 4, xl: 8 }} py={{ base: 8, md: 20 }} px={4}>
-            {data.map((category) => {
+            {data.map((category, idx) => {
               return (
-                <>
-                  <Box
-                    bg={category.color}
-                    h={{ base: 60, xl: 80 }}
-                    w={{ base: "auto", xl: 80 }}
-                    rounded={"md"}
-                    display={"flex"}
-                    alignItems={"flex-end"}
-                    onClick={() => {
-                      router.push({
-                        pathname: "/",
-                        query: {
-                          category_id: category.id
-                        }
-                      });
+                <Box
+                  key={idx}
+                  bg={category.color}
+                  h={{ base: 60, xl: 80 }}
+                  w={{ base: "auto", xl: 80 }}
+                  rounded={"md"}
+                  display={"flex"}
+                  alignItems={"flex-end"}
+                  onClick={() => {
+                    router.push({
+                      pathname: "/",
+                      query: {
+                        category_id: category.id
+                      }
+                    });
+                  }}
+                  transition="ease .4s"
+                  _hover={{
+                    transform: "scale(1.08)",
+                    color: "blackAlpha.800"
+                  }}
+                  cursor={"pointer"}
+                >
+                  <Text
+                    w="full"
+                    fontWeight={{
+                      base: "semibold",
+                      sm: "bold"
                     }}
-                    transition="ease .4s"
-                    _hover={{
-                      transform: "scale(1.08)",
-                      color: "blackAlpha.800"
+                    py={2}
+                    px={4}
+                    fontSize={{
+                      base: "xl",
+                      xl: "3xl"
                     }}
-                    cursor={"pointer"}
                   >
-                    <Text
-                      w="full"
-                      fontWeight={{
-                        base: "semibold",
-                        sm: "bold"
-                      }}
-                      py={2}
-                      px={4}
-                      fontSize={{
-                        base: "xl",
-                        xl: "3xl"
-                      }}
-                    >
-                      {category.name}
-                    </Text>
-                  </Box>
-                </>
+                    {category.name}
+                  </Text>
+                </Box>
               );
             })}
           </SimpleGrid>

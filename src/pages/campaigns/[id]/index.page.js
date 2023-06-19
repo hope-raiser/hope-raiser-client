@@ -213,10 +213,10 @@ export default function CampaignDetails({ id }) {
               <div className="w-full px-4 lg:px-0 lg:w-3/5">
                 <Carousel image={campaign.banner.map((banner) => banner.image)} />
                 <div className="flex gap-4 mx-4">
-                  {campaign.categories.map((cat) => {
+                  {campaign.categories.map((cat, idx) => {
                     return (
                       <>
-                        <span className="bg-slate-100 text-base font-semibold text-Dark shadow-sm px-3 py-1 mt-6 rounded-xl cursor-default ring-1 ring-Dark">
+                        <span  className="bg-slate-100 text-base font-semibold text-Dark shadow-sm px-3 py-1 mt-6 rounded-xl cursor-default ring-1 ring-Dark">
                           {cat.categories.name}
                         </span>
                       </>

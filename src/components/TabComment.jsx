@@ -67,10 +67,10 @@ export default function TabComment({ campaign, fetchCampaign, accessToken }) {
             </div>
           </form>
           <div className="px-4">
-            {reverseArray.map((comment) => {
+            {reverseArray.map((comment,idx) => {
               const commentDate = dayjs(comment.createdAt).fromNow();
               return (
-                <>
+                <div key={idx}>
                    <div className="flex gap-2">
                     <Avatar size='md' src={comment.user.avatar} mb={4} />
                     <div>
@@ -81,7 +81,7 @@ export default function TabComment({ campaign, fetchCampaign, accessToken }) {
                     </div>
                   </div>
                   <p className="pb-1 mb-6 border-b border-slate-100">{comment.content}</p>
-                </>
+                </div>
               );
             })}
           </div>

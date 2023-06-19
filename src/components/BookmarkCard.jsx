@@ -23,12 +23,12 @@ function BookmarkCard(props) {
   return (
     <>
       <Link href={`/campaigns/${bookmark.campaignId}`}>
-        <Card variant="elevated" minHeight="sm" minWidth="sm" maxWidth="lg">
+        <Card variant="elevated" >
           <CardHeader>
             {bookmark.campaign.banner.map((bann, index) => {
               return (
-                <AspectRatio ratio={16 / 9}>
-                  <Image key={index} src={bann.image} />
+                <AspectRatio key={index} ratio={16 / 9}>
+                  <Image  fallback="https://placehold.co/800x450" src={bann.image} />
                 </AspectRatio>
               );
             })}

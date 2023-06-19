@@ -23,12 +23,12 @@ import {
     return (
       <>
         <Link href={`/campaigns/${campaigns.id}`}>
-          <Card variant="elevated" minHeight="sm" minWidth="sm" maxWidth="lg">
+          <Card variant="elevated">
             <CardHeader>
               {campaigns.banner.map((bann, index) => {
                 return (
-                  <AspectRatio ratio={16 / 9}>
-                    <Image key={index} src={bann.image} />
+                  <AspectRatio key={index} ratio={16 / 9}>
+                    <Image  src={bann.image} />
                   </AspectRatio>
                 );
               })}

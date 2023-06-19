@@ -2,8 +2,7 @@ import BookmarkCard from "@/components/BookmarkCard";
 import Layout from "@/components/Layout";
 import { getAllBookmark } from "@/modules/fetch/bookmarks";
 import { getLoginUser } from "@/modules/fetch/users";
-import { CircularProgress, SimpleGrid, Card, CardHeader, CardBody, CardFooter, SkeletonText, Stack, Text, Center } from "@chakra-ui/react";
-import SkeletonImage from "antd/es/skeleton/Image";
+import { CircularProgress, SimpleGrid, Card, CardHeader, CardBody, CardFooter, SkeletonText, Stack, Text, Center, Container } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 export default function UserDetails({ id }) {
@@ -38,7 +37,6 @@ export default function UserDetails({ id }) {
             <Center>
               <Card variant="elevated" height={"auto"} width={{ base: "2xs", md: "sm" }} maxWidth={"sm"} mt="8">
                 <CardHeader>
-                  <SkeletonImage ratio={16 / 9} w="full" />
                 </CardHeader>
                 <CardBody>
                   <Stack my="1" spacing="8">
@@ -56,11 +54,13 @@ export default function UserDetails({ id }) {
             </Center>
           </>
         )}
-        <SimpleGrid mt="3" p="5" columns={3} spacing={6} justifyContent="center" className="min-h-screen">
-          {bookmarks.map((bookmark, idx) => (
-            <BookmarkCard bookmark={bookmark} key={idx} />
-          ))}
-        </SimpleGrid>
+        <Container maxW='auto'>
+          <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} gap={10} my={7} mx={{md:5, lg:10}}>
+            {bookmarks.map((bookmark, idx) => (
+              <BookmarkCard bookmark={bookmark} key={idx} />
+            ))}
+          </SimpleGrid>
+        </Container>
       </Layout>
     </>
   );
